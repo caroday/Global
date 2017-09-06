@@ -2,25 +2,6 @@ function rem(pet1)
 	doRemoveCreature(pet1)
 end
 
-function transport(pet1, cid)
-	local posit = getCreaturePosition(cid)
-	if not posit then
-		return
-	end
-
-	local maxDistance = 6
-	if Tile(posit):hasFlag(TILESTATE_PROTECTIONZONE) then -- we need to edit source to enable pet enter on pz
-		return
-	else
-		if getCreaturePosition(pet1).z ~= getCreaturePosition(cid).z or getDistanceBetween(getCreaturePosition(pet1), getCreaturePosition(cid)) > maxDistance then
-			posit.y = posit.y + 1
-			doTeleportThing(pet1, posit, true)
-		end
-	end
-
-	addEvent(transport, 1*1*1000, pet1, cid)
-end
-
 local combat = createCombatObject()
 setCombatParam(combat, COMBAT_PARAM_TYPE, COMBAT_NONE)
 setCombatParam(combat, COMBAT_PARAM_EFFECT, CONST_ME_BLOCKHIT)
@@ -48,7 +29,6 @@ function onCastSpell(cid, var)
 			local pet1 = Game.createMonster(pet, getCreaturePosition(cid))
 			pet1:setMaster(cid)
 			addEvent(rem, 15*60*1000, pet1.uid)
-			addEvent(transport, 1*10*1000, pet1.uid, cid.uid)
 			if pet1 == false then
 				return combat:execute(creature, var)
 			end
