@@ -1,17 +1,17 @@
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
-worldType = "pvp-enforced"
+worldType = "pvp"
 hotkeyAimbotEnabled = true
-protectionLevel = 0
+protectionLevel = 7
 pzLocked = 60 * 1000
-removeChargesFromRunes = false
+removeChargesFromRunes = true
 removeChargesFromPotions = true
-removeWeaponAmmunition = false
-removeWeaponCharges = false
-timeToDecreaseFrags = 4 * 60 * 60 * 1000
-whiteSkullTime = 7 * 60 * 1000
-stairJumpExhaustion = 500
-experienceByKillingPlayers = true
+removeWeaponAmmunition = true
+removeWeaponCharges = true
+timeToDecreaseFrags = 24 * 60 * 60 * 1000
+whiteSkullTime = 15 * 60 * 1000
+stairJumpExhaustion = 2 * 1000
+experienceByKillingPlayers = false
 expFromPlayersLevelRange = 75
 dayKillsToRedSkull = 3
 weekKillsToRedSkull = 5
@@ -22,24 +22,24 @@ orangeSkullDuration = 7
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
-ip = "162.243.186.43"
+ip = "127.0.0.1"
 bindOnlyGlobalAddress = false
 loginProtocolPort = 7171
 gameProtocolPort = 7172
 statusProtocolPort = 7171
 maxPlayers = 0
-motd = "Welcome to The UATibia Global!"
-onePlayerOnlinePerAccount = false
+motd = "Welcome to The OTXServer Global!"
+onePlayerOnlinePerAccount = true
 allowClones = false
-serverName = "UATibia"
+serverName = "OTXServer-Global"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
-maxPacketsPerSecond = 1000
+maxPacketsPerSecond = 25
 
 -- Version Manual
 clientVersionMin = 1100
-clientVersionMax = 1146
-clientVersionStr = "Only clients with protocol version 10 or 11.46 are allowed!"
+clientVersionMax = 1147
+clientVersionStr = "Only clients with protocol version 11.47 are allowed!"
 
 -- Depot Limit
 freeDepotLimit = 2000
@@ -53,6 +53,9 @@ gamestoreByModules = true
 enableLiveCasting = true
 liveCastPort = 7173
 
+-- Expert Pvp Config
+expertPvp = false
+
 -- Deaths
 -- NOTE: Leave deathLosePercent as -1 if you want to use the default
 -- death penalty formula. For the old formula, set it to 10. For
@@ -62,7 +65,7 @@ deathLosePercent = -1
 -- Houses
 -- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
 housePriceEachSQM = 1000
-houseRentPeriod = "never"
+houseRentPeriod = "weekly"
 
 -- Item Usage
 timeBetweenActions = 200
@@ -82,7 +85,7 @@ maxMarketOffersAtATimePerPlayer = 100
 -- MySQL
 mysqlHost = "127.0.0.1"
 mysqlUser = "root"
-mysqlPass = "tunelsecreto27"
+mysqlPass = ""
 mysqlDatabase = "global"
 mysqlPort = 3306
 mysqlSock = ""
@@ -90,8 +93,8 @@ passwordType = "sha1"
 
 -- Misc.
 allowChangeOutfit = true
-freePremium = true
-kickIdlePlayerAfterMinutes = 1500
+freePremium = false
+kickIdlePlayerAfterMinutes = 15
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = false
@@ -102,10 +105,10 @@ classicAttackSpeed = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
-rateExp = stages
-rateSkill = 50
-rateLoot = 4
-rateMagic = 10
+rateExp = 1
+rateSkill = 1
+rateLoot = 1
+rateMagic = 1
 rateSpawn = 1
 
 -- Monster rates
@@ -131,7 +134,7 @@ defaultPriority = "high"
 startupDatabaseOptimization = true
 
 -- Status server information
-ownerName = "UATibia Staff"
-ownerEmail = "uatibia@gmail.com"
-url = "http://www.uatibia.com"
-location = "USA"
+ownerName = "Malucooo"
+ownerEmail = "e_nunes@live.com"
+url = "http://www.facebook.com/erick.nunes.75"
+location = "Brazil"
