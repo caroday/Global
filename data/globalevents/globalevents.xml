@@ -48,7 +48,7 @@
 	<globalevent type="startup" name="doCheckHouses" script="others/doCheckHouses.lua" />
 	<globalevent interval="100000" name="GuildWar" script="guildwar.lua"/>
 	<globalevent interval="1800000" name="AutoSave" script="autosave.lua"/>
-	<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>
+	<!--<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>-->
 	<globalevent name="oramondTPS" type="startup" script="Novos/oramondTPS.lua"/>
 
 </globalevents>
