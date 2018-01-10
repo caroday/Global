@@ -1,4 +1,4 @@
-local freeBlessMaxLevel = 20
+local freeBlessMaxLevel = 100
 
 function onLogin(cid)
     local player = Player(cid)
