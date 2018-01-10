@@ -4,7 +4,9 @@ local blessings = {
 	{id = 3, name = 'Spiritual Shielding'},
 	{id = 4, name = 'Fire of the Suns'},
 	{id = 5, name = 'Wisdom of Solitude'},
-	{id = 6, name = 'Twist of Fate'}
+	{id = 6, name = 'Twist of Fate'},
+	{id = 7, name = 'Blood of the Mountain'},
+	{id = 8, name = 'Heart of the Mountain'}
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)

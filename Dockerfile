@@ -23,7 +23,7 @@ RUN apt-get update -qq && apt-get install -qq -y \
 
 # unpack global map
 WORKDIR /app/data/world
-RUN unzip global.zip
+RUN unzip realmap.zip
 
 # Compile it
 WORKDIR /app

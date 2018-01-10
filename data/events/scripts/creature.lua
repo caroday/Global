@@ -1,11 +1,5 @@
 __picif = {}
 function Creature:onChangeOutfit(outfit)
-	if self:isPlayer() then
-		local battlefieldInfo = Battlefield:findPlayer(self)
-		if battlefieldInfo then
-			return false
-		end
-	end
 	return true
 end
 
@@ -40,7 +34,7 @@ local function removeCombatProtection(cid)
 	end, time * 1000, cid)
 end
 
--- AQUI TREINER ONLINE
+-- Increase Stamina when Attacking Trainer
 local staminaBonus = {
 	target = 'Training Monk',
 	period = 120000, -- time on miliseconds
@@ -75,24 +69,6 @@ function Creature:onTargetCombat(target)
 		end
 	end
 
-	--- BATTLEFIELD
-	if self:isPlayer() and target:isPlayer() then
-		if self:getStorageValue(_Lib_Battle_Info.TeamOne.storage) >= 1 and target:getStorageValue(_Lib_Battle_Info.TeamOne.storage) >= 1 or self:getStorageValue(_Lib_Battle_Info.TeamTwo.storage) >= 1 and target:getStorageValue(_Lib_Battle_Info.TeamTwo.storage) >= 1 then
-			return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
-		end
-		if self:getStorageValue(_Lib_Battle_Info1.TeamOne1.storage1) >= 1 and target:getStorageValue(_Lib_Battle_Info1.TeamOne1.storage1) >= 1 or self:getStorageValue(_Lib_Battle_Info1.TeamTwo1.storage1) >= 1 and target:getStorageValue(_Lib_Battle_Info1.TeamTwo1.storage1) >= 1 then
-			return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
-		end
-		--party protect
-		local party = self:getParty()
-		if party then
-			local targetParty = target:getParty()
-			if targetParty and targetParty == party then
-				return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
-			end
-		end
-	end
-
 	if target:isPlayer() then
 		if self:isMonster() then
 			local protectionStorage = target:getStorageValue(Storage.combatProtectionStorage)
@@ -115,8 +91,31 @@ function Creature:onTargetCombat(target)
 		end
 	end
 
-	-- AQUI TREINER ONLINE
-	if self:isPlayer() then
+	if ((target:isMonster() and self:isPlayer() and target:getType():isPet() and target:getMaster() == self) or (self:isMonster() and target:isPlayer() and self:getType():isPet() and self:getMaster() == target)) then
+		return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE
+	end
+
+	if PARTY_PROTECTION ~= 0 then
+		if self:isPlayer() and target:isPlayer() then
+			local party = self:getParty()
+			if party then
+				local targetParty = target:getParty()
+				if targetParty and targetParty == party then
+					return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
+				end
+			end
+		end
+	end
+
+	if ADVANCED_SECURE_MODE ~= 0 then
+		if self:isPlayer() and target:isPlayer() then
+			if self:hasSecureMode() then
+				return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
+			end
+		end
+	end
+
+		if self:isPlayer() then
 		if target and target:getName() == staminaBonus.target then
 			local name = self:getName()
 			if not staminaBonus.events[name] then
@@ -126,4 +125,118 @@ function Creature:onTargetCombat(target)
 	end
 
 	return true
+end
+
+function Creature:onDrainHealth(attacker, typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary)
+	if (not self) then
+		return typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary
+	end
+
+	if (not attacker) then
+		return typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary
+	end
+
+	-- Imbuement Defense
+	if self:isPlayer() then
+		for slot = 1, 10 do
+			local item = self:getSlotItem(slot)
+			if item and item:getType():getImbuingSlots() > 0 then
+				for i = 1, item:getType():getImbuingSlots() do
+					local slotEnchant = item:getSpecialAttribute(i)
+					if (slotEnchant and type(slotEnchant) == 'string') then
+						local percentDamage, enchantPercent = 0, item:getImbuementPercent(slotEnchant)
+						local typeEnchant = item:getImbuementType(i) or ""
+
+						reductPrimary, reductSecondary = false, false
+						if (typeEnchant == "absorbPercentFire") then
+							-- reduct fire damage
+							if typePrimary == COMBAT_FIREDAMAGE then
+								reductPrimary = true
+							end
+
+							if typeSecondary == COMBAT_FIREDAMAGE then
+								reductSecondary = true
+							end
+						elseif (typeEnchant == "absorbPercentEarth" and typePrimary == COMBAT_EARTHDAMAGE) then
+							-- reduct earth damage
+							if typePrimary == COMBAT_EARTHDAMAGE then
+								reductPrimary = true
+							end
+
+							if typeSecondary == COMBAT_EARTHDAMAGE then
+								reductSecondary = true
+							end
+						elseif (typeEnchant == "absorbPercentIce" and typePrimary == COMBAT_ICEDAMAGE) then
+							-- reduct ice damage
+							if typePrimary == COMBAT_ICEDAMAGE then
+								reductPrimary = true
+							end
+
+							if typeSecondary == COMBAT_ICEDAMAGE then
+								reductSecondary = true
+							end
+						elseif (typeEnchant == "absorbPercentEnergy" and typePrimary == COMBAT_ENERGYDAMAGE) then
+							-- reduct energy damage
+							if typePrimary == COMBAT_ENERGYDAMAGE then
+								reductPrimary = true
+							end
+
+							if typeSecondary == COMBAT_ENERGYDAMAGE then
+								reductSecondary = true
+							end
+						elseif (typeEnchant == "absorbPercentDeath" and typePrimary == COMBAT_DEATHDAMAGE) then
+							-- reduct death damage
+							if typePrimary == COMBAT_DEATHDAMAGE then
+								reductPrimary = true
+							end
+
+							if typeSecondary == COMBAT_DEATHDAMAGE then
+								reductSecondary = true
+							end
+						end
+
+						if reductPrimary then
+							damagePrimary = damagePrimary - (damagePrimary * enchantPercent/100)
+						end
+
+						if reductSecondary then
+							damageSecondary = damageSecondary - (damageSecondary * enchantPercent/100)
+						end
+
+						if (typeEnchant ~= "" and typeEnchant == "skillShield" or typeEnchant:find("absorb") and (reductPrimary or reductSecondary)) then
+							useStaminaImbuing(self:getId(), item:getUniqueId())
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if (attacker:isPlayer()) then
+		if (self:isMonster() and not self:getMaster()) then
+			for i = 1, 3 do
+				if (attacker:isActive(i-1)) then
+					local bonusInfo = attacker:getBonusInfo(i-1)
+					if (bonusInfo.Type == 0 and bonusInfo.Name == self:getName()) then
+						damagePrimary = damagePrimary + math.floor(damagePrimary * (bonusInfo.Value/100))
+						break
+					end
+				end
+			end
+		end
+	elseif (attacker:isMonster()) then
+		if (self:isPlayer()) then
+			for i = 1, 3 do
+				if (self:isActive(i-1)) then
+					local bonusInfo = self:getBonusInfo(i-1)
+					if (bonusInfo.Type == 1 and bonusInfo.Name == attacker:getName()) then
+						damagePrimary = damagePrimary - math.floor(damagePrimary * (bonusInfo.Value/100))
+						return typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary
+					end
+				end
+			end
+		end
+	end
+
+	return typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary
 end

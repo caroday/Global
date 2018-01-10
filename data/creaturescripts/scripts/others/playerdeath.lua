@@ -1,5 +1,4 @@
 local deathListEnabled = true
-local maxDeathRecords = 5
 
 function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
 	local playerId = player:getId()
@@ -15,7 +14,7 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 	if not deathListEnabled then
 		return
 	end
-	
+
 	local byPlayer = 0
 	local killerName
 	if killer ~= nil then
@@ -65,11 +64,6 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 		result.free(resultId)
 	end
 
-	local limit = deathRecords - maxDeathRecords
-	if limit > 0 then
-		db.asyncQuery("DELETE FROM `player_deaths` WHERE `player_id` = " .. playerGuid .. " ORDER BY `time` LIMIT " .. limit)
-	end
-
 	if byPlayer == 1 then
 		local targetGuild = player:getGuild()
 		targetGuild = targetGuild and targetGuild:getId() or 0
@@ -90,9 +84,4 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 			end
 		end
 	end
-	--Global
-	if killer:isPlayer() then
-		broadcastMessage(player:getName().."["..player:getLevel().."] just killed by the player "..killer:getName().."["..killer:getLevel().."].", MESSAGE_EVENT_ADVANCE)
-	end
-	--ENDGlobal
 end
