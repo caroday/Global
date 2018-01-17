@@ -92,9 +92,9 @@ passwordType = "sha1"
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
-kickIdlePlayerAfterMinutes = 1500
-idleWarningTime = 1500 * 60 * 1000
-idleKickTime = 1500 * 60 * 1000
+kickIdlePlayerAfterMinutes = 0
+idleWarningTime = 0
+idleKickTime = 0
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = false
