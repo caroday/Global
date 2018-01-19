@@ -206,8 +206,7 @@ function changeStateToActive(player, indexColumn)
 	local timeLeft = player:getStaminaBonus(indexColumn)
 	local Bonus = loadBonus(player, indexColumn)
 	if (not Bonus) then
-		changeStateToSelection(player, indexColumn)
-		return
+		return changeStateToSelection(player, indexColumn)
 	end
 
 	local mType = MonsterType(Bonus.Name)

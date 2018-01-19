@@ -1,0 +1,27 @@
+# This file is a template, and might need editing before it works on your project.
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+image: ubuntu:16.04
+
+build:
+  stage: build
+  # install the necessary build tools when needed
+  before_script: 
+    - apt update && apt -y install make cmake build-essential liblua5.2-dev libgmp3-dev libmysqlclient-dev libboost-system-dev libboost-iostreams-dev libpugixml-dev 
+  script: 
+    - mkdir -p build && cd build
+    - cmake .. && make
+  artifacts:
+    paths:
+      - build/tfs
+  # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
+  cache:
+    paths:
+      - "build/*"
+
+# run tests using the binary built before
+# test:
+#  stage: test
+#  script:
+#   - ./runmytests.sh

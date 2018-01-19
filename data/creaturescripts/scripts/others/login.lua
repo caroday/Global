@@ -138,19 +138,19 @@ function onLogin(player)
     end
 
     if (player:getAccountType() == ACCOUNT_TYPE_TUTOR) then
-        local msg = [[:: Tutor Rules ::
-            1*>3 Warnings you lose the job.
-            2*>Without parallel conversations with players in Help, if the player starts offending, you simply mute.
-            3*>Be polite with the players in the Help and especially in the Private, try to help as much as possible.
-            4*>Always log in your schedule, if you do not have a justification you will be removed from the staff.
-            5*>Help is only allowed to ask questions related to tibia.
-            6*>It is not allowed to divulge a team to kill or to help in quest.
-            7*>You are not allowed to sell items in Help.
-            8*>If the player finds a bug, ask to go to the website to send a ticket and explain in detail.
-            9*>Always keep the Tutor Chat open. (required).
-            10*>You finished to meet your schedule, saw that has no online tutor, you communicate with any CM in-game or ts and is no help to anyone login, if you give.
-            11*>Always keep a great English in Help, we want tutors who support, not that they speak a satanic ritual.
-            12*>If you see a tutor doing something that violates the rules, take a print and send it to the superiors."
+        local msg = [[:: Regras Tutor ::
+            1*>3 Advertências você perde o cargo.
+            2*>Sem conversas paralelas com jogadores no Help, se o player começar a ofender, você simplesmente o mute.
+            3*>Seja educado com os player no Help e principalmente no Privado, tenta ajudar o máximo possível.
+            4*>Sempre logue no seu horário, caso não tiver uma justificativa você será removido da staff.
+            5*>Help é somente permitido realizar dúvidas relacionadas ao tibia.
+            6*>Não é Permitido divulgar time pra upar ou para ajudar em quest.
+            7*>Não é permitido venda de itens no Help.
+            8*>Caso o player encontre um bug, peça para ir ao site mandar um ticket e explicar em detalhes.
+            9*>Mantenha sempre o Chat dos Tutores aberto. (obrigatório).
+            10*>Você terminou de cumprir seu horário, viu que não tem nenhum tutor Online, você comunica com algum CM in-game ou ts e fica no help até alguém logar, se der.
+            11*>Mantenha sempre um ótimo português no Help, queremos tutores que dêem suporte, não que fiquem falando um ritual satânico.
+            12*>Se ver um tutor fazendo algo que infrinja as regras, tire uma print e envie aos superiores."
             -- Comandos --
             Mutar Player: /mute nick,90. (90 segundos)
             Desmutar Player: /unmute nick.
@@ -203,7 +203,7 @@ function onLogin(player)
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
     end
 
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report it in www.uatibia.com')
+	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Reporte em http://www.github.com/malucooo/otxserver-new/issues')
    
     -- Events
     for i = 1, #events do

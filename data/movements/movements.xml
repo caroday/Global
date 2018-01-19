@@ -22,6 +22,7 @@
 <movevent event="StepIn" actionid="62160" script="hallsofhope/iceexit.lua" />
 <movevent event="StepIn" actionid="62161" script="hallsofhope/hollyexit.lua" />
 <movevent event="StepIn" actionid="62162" script="hallsofhope/tprosa.lua" />
+<movevent event="StepIn" actionid="62163" script="hallsofhope/rosaexit.lua" />
 
 <!-- Anti-Entrosa -->
 <movevent event="StepIn" actionid="47001" script="warPrivate_movements.lua"/>-->

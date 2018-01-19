@@ -37,19 +37,19 @@
 	<action itemid="27095" script="other/carpets.lua"/> <!-- fur carpet -->
 	<action itemid="27088" script="other/carpets.lua"/> <!-- diamond carpet -->
 	<action itemid="27096" script="other/carpets.lua"/> <!-- diamond carpet -->
-        <action itemid="27089" script="other/carpets.lua"/> <!-- patterned carpet -->
+    <action itemid="27089" script="other/carpets.lua"/> <!-- patterned carpet -->
 	<action itemid="27097" script="other/carpets.lua"/> <!-- patterned carpet -->
 	<action itemid="27090" script="other/carpets.lua"/> <!-- night sky carpet -->
 	<action itemid="27098" script="other/carpets.lua"/> <!-- night sky carpet -->
-        <action itemid="27091" script="other/carpets.lua"/> <!-- star carpet -->
+    <action itemid="27091" script="other/carpets.lua"/> <!-- star carpet -->
 	<action itemid="27099" script="other/carpets.lua"/> <!-- star carpet -->
 	<action itemid="29349" script="other/carpets.lua"/> <!-- verdant carpet -->
 	<action itemid="29350" script="other/carpets.lua"/> <!-- verdant carpet -->
-        <action itemid="29351" script="other/carpets.lua"/> <!-- shaggy carpet -->
+    <action itemid="29351" script="other/carpets.lua"/> <!-- shaggy carpet -->
 	<action itemid="29352" script="other/carpets.lua"/> <!-- shaggy carpet -->
 	<action itemid="29353" script="other/carpets.lua"/> <!-- mystic carpet -->
 	<action itemid="29354" script="other/carpets.lua"/> <!-- mystic carpet -->
-        <action itemid="29355" script="other/carpets.lua"/> <!-- stone tile -->
+    <action itemid="29355" script="other/carpets.lua"/> <!-- stone tile -->
 	<action itemid="29356" script="other/carpets.lua"/> <!-- stone tile -->
 	<action itemid="29357" script="other/carpets.lua"/> <!-- stone tile -->
 	<action itemid="29358" script="other/carpets.lua"/> <!-- stone tile -->

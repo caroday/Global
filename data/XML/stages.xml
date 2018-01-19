@@ -8,6 +8,7 @@
 	<stage minlevel="251" maxlevel="300" multiplier="250" />
 	<stage minlevel="301" maxlevel="350" multiplier="200" />
 	<stage minlevel="351" maxlevel="400" multiplier="150" />
+	<stage minlevel="401" maxlevel="450" multiplier="125" />
 	<stage minlevel="401" maxlevel="450" multiplier="100" />
 	<stage minlevel="451" maxlevel="500" multiplier="90" />
 	<stage minlevel="501" maxlevel="550" multiplier="80" />

@@ -171,15 +171,9 @@ pip-log.txt
 .*.swo
 
 *.dll
-config.lua
 theforgottenserver.exe
 vc14/theforgottenserver.VC.db
-data/world/global.otbm
 
 #Jetbrains' IDEs config files
 .idea/
 cmake-build-*/
-data/world/realmap.otbm
-data/items/items(official).otb
-data/modules/scripts/imbuement/imbuement - Copia.lua
-*.otbm
