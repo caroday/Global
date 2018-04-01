@@ -2,17 +2,15 @@
 <creaturescripts>
     
     <!-- New Summons (Pets) -->	
-    <event type="login" name="petlogin" script="pet.lua"/>
+    <event type="login" name="petlogin" script="pet.lua" />
     <event type="think" name="petthink" script="pet.lua" />
+	<event type="death" name="petdeath" script="pet.lua" />
 	
     <!-- Anti-Entrosa -->
     <event type="login" name="WarPrivateLogin" script="warPrivate_creaturescript.lua"/>
     <event type="logout" name="WarPrivateLogout" script="warPrivate_creaturescript.lua"/>
     <event type="death" name="WarPrivateDeath" script="warPrivate_creaturescript.lua"/>
 	<event type="modalwindow" name="ModalWindowHelper" script="modalwindowhelper.lua" />  
-	<event type="logout" name="CityWarLogout" script="citywar.lua" />
-    <event type="preparedeath" name="CityWarDeath" script="citywar.lua" />
-    <event type="textedit" name="CityWarInvite" script="citywar.lua" />
 
     <!-- Oramond Quest -->
     <event type="death" name="tp" script="quests/oramond/revanger.lua"/>
@@ -110,9 +108,12 @@
 	
 	<event type="kill" name="KillingInTheNameOfKillss" script="necro.lua" />
 	<event type="kill" name="KillingInTheNameOfKillsss" script="minos.lua" />
-	<!-- spike task -->
-	<event type="kill"  name="SpikeTaskQuestCrystal" script="quests/spike task/crystalkill.lua"/>
-	<event type="kill"  name="SpikeTaskQuestDrillworm" script="quests/spike task/drillwormkill.lua"/>
+
+	<!-- Spike Tasks Quest -->
+	<event type="kill" name="UpperSpikeKill" script="quests/spike tasks/upperspikekill.lua"/>
+	<event type="kill" name="MiddleSpikeKill" script="quests/spike tasks/middlespikekill.lua"/>
+	<event type="kill" name="LowerSpikeKill" script="quests/spike tasks/lowerspikekill.lua"/>
+
 	<!-- The Masters Voice Quest -->
 	<event type="kill" name="MastersVoiceServants" script="quests/their master's voice/ServantsKill.lua" />
 

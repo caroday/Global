@@ -118,4 +118,8 @@
 	<mount id="116" clientid="1025" name="Cranium Spider" speed="20" premium="yes" />
 	<mount id="117" clientid="1026" name="Cave Spider" speed="20" premium="yes" />
 	<mount id="118" clientid="1027" name="Gloom Widow" speed="20" premium="yes" />
+	<mount id="119" clientid="1072" name="Mole" speed="20" premium="yes" />
+	<mount id="120" clientid="1073" name="Marsh Toad" speed="20" premium="yes" />
+	<mount id="121" clientid="1074" name="Sanguine Frog" speed="20" premium="yes" />
+	<mount id="122" clientid="1075" name="Toxic Toad" speed="20" premium="yes" />
 </mounts>

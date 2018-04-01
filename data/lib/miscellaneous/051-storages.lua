@@ -990,8 +990,8 @@ Storage = {
 	Factions = 50716,
 	MaryzaCookbook = 50721,
 	combatProtectionStorage = 50722,
-	blockMovementStorage = 100000
-	
+	blockMovementStorage = 100000,
+	PetSummon = 60045
 
 }
 

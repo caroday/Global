@@ -8,6 +8,7 @@
 	<action fromid="26100" toid="26101" script="other/transform.lua"/>
 	<action fromid="26107" toid="26108" script="other/transform.lua"/>
 	<action fromid="26141" toid="26142" script="other/transform.lua"/>
+    <action fromid="26402" toid="26406" script="other/transform.lua"/>
 	<action itemid="26353" script="other/transform.lua"/><!-- dog house-->
 	<action itemid="26087" script="other/carpets.lua"/> <!-- yalaha carpet-->
 	<action itemid="26109" script="other/carpets.lua"/> <!-- yalaha carpet-->
@@ -68,9 +69,7 @@
 	
 	<!-- Imbuement System -->
 	<action fromid="27728" toid="27729" script="imbuement.lua" />
-	<action fromid="27771" toid="27772" script="imbuement.lua" />
 	<action fromid="27850" toid="27851" script="imbuement.lua" />
-	<action fromid="27842" toid="27843" script="imbuement.lua" />
 	
     <!-- Ferumbras Ascedant Quest -->
     <action itemid="24763" script="FerumbrasAscedantQuest/RiftRunner.lua"/>
@@ -98,11 +97,17 @@
 	<action fromid="26364" toid="26365" script="houses/pet.lua" />
 	<action fromid="26098" toid="26099" script="houses/pet.lua" />
 	
-	<!-- Spike Task -->
-	<action itemid="21557" script="quests/spike task/lodestone.lua" />
-	<action itemid="21564" script="quests/spike task/fertilise.lua" />
-	<action itemid="21559" script="quests/spike task/nests.lua" />
-	<action itemid="21556" script="quests/spike task/temperature.lua" />
+	<!-- Spike Tasks Quest -->
+	<action itemid="21553" script="quests/spike tasks/spirit shovel.lua"/>
+	<action itemid="21554" script="quests/spike tasks/tuning fork.lua"/>
+	<action itemid="21555" script="quests/spike tasks/ghost detector.lua"/>
+	<action itemid="21556" script="quests/spike tasks/thermometer.lua"/>
+	<action itemid="21557" script="quests/spike tasks/lodestone.lua"/>
+	<action itemid="21559" script="quests/spike tasks/nests.lua"/>
+	<action itemid="21564" script="quests/spike tasks/fertilizer.lua"/>
+	<action itemid="21566" script="quests/spike tasks/lodestone.lua"/>
+	<action itemid="21568" script="quests/spike tasks/lodestone.lua"/>
+
 	<!-- Others House -->
 	<action fromid="26094" toid="26097" script="houses/statue.lua" />
 	
@@ -258,10 +263,8 @@
 	<action uniqueid="25612" script="gray island/obujos.lua" />-->
 	
 	<!-- Roshamuul -->
-        <action itemid="22604" script="prison/silver.lua"/>
-        <action itemid="22605" script="prison/copper.lua"/>
-        <action itemid="22606" script="prison/bronze.lua"/>
-        <action itemid="22607" script="prison/golden.lua"/>
+       <action fromid="22604" toid="22606" script="prison/keys.lua"/>
+       <action itemid="22607" script="prison/golden.lua"/>
 			
 			
 	<action itemid="22598" script="other/unrealized dream.lua"/>		
@@ -936,6 +939,7 @@
 	<action itemid="16112" script="other/spellbook.lua" />
 	<action itemid="18401" script="other/spellbook.lua" />
 	<action fromid="22422" toid="22424" script="other/spellbook.lua" />
+	<action itemid="29003" script="other/spellbook.lua" />
 
 	<!-- Construction Kits / Beds -->
 	<action fromid="3901" toid="3938" script="other/constructionkits.lua" />
@@ -1092,6 +1096,7 @@
 	<action fromid="10264" toid="10267" script="other/windows.lua" />
 	<action fromid="10488" toid="10491" script="other/windows.lua" />
 	<action fromid="11258" toid="11262" script="other/blessingCharms.lua" />
+	<action fromid="28036" toid="28037" script="other/blessingCharms.lua" />
 	<action itemid="7737" script="other/costumebags.lua" />
 	<action itemid="7739" script="other/costumebags.lua" />
 	<action itemid="9076" script="other/costumebags.lua" />

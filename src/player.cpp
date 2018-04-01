@@ -701,33 +701,43 @@ bool Player::canWalkthrough(const Creature* creature) const
 	}
 
 	const Player* player = creature->getPlayer();
-	if (!player) {
-		return false;
+	const Monster* monster = creature->getMonster();
+
+	if (monster) {
+		if (!monster->isPet()) {
+			return false;
+		}
+		return true;
 	}
 
-	const Tile* playerTile = player->getTile();
-	if (!playerTile || !playerTile->hasFlag(TILESTATE_PROTECTIONZONE)) {
-		return false;
-	}
+	if (player) {
+		const Tile* playerTile = player->getTile();
+		if (!playerTile || !playerTile->hasFlag(TILESTATE_PROTECTIONZONE)) {
+			return false;
+		}
 
-	const Item* playerTileGround = playerTile->getGround();
-	if (!playerTileGround || !playerTileGround->hasWalkStack()) {
-		return false;
-	}
+		const Item* playerTileGround = playerTile->getGround();
+		if (!playerTileGround || !playerTileGround->hasWalkStack()) {
+			return false;
+		}
 
-	Player* thisPlayer = const_cast<Player*>(this);
-	if ((OTSYS_TIME() - lastWalkthroughAttempt) > 2000) {
-		thisPlayer->setLastWalkthroughAttempt(OTSYS_TIME());
-		return false;
-	}
+		Player* thisPlayer = const_cast<Player*>(this);
+		if ((OTSYS_TIME() - lastWalkthroughAttempt) > 2000) {
+			thisPlayer->setLastWalkthroughAttempt(OTSYS_TIME());
+			return false;
+		}
 
-	if (creature->getPosition() != lastWalkthroughPosition) {
+		if (creature->getPosition() != lastWalkthroughPosition) {
+			thisPlayer->setLastWalkthroughPosition(creature->getPosition());
+			return false;
+		}
 		thisPlayer->setLastWalkthroughPosition(creature->getPosition());
+		return true;
+	}
+	else {
 		return false;
 	}
 
-	thisPlayer->setLastWalkthroughPosition(creature->getPosition());
-	return true;
 }
 
 bool Player::canWalkthroughEx(const Creature* creature) const
@@ -736,13 +746,23 @@ bool Player::canWalkthroughEx(const Creature* creature) const
 		return true;
 	}
 
+	const Monster* monster = creature->getMonster();
+	if (monster) {
+		if (!monster->isPet()) {
+			return false;
+		}
+		return true;
+	}
+
 	const Player* player = creature->getPlayer();
-	if (!player) {
+	if (player) {
+		const Tile* playerTile = player->getTile();
+		return playerTile && playerTile->hasFlag(TILESTATE_PROTECTIONZONE);
+	}
+	else {
 		return false;
 	}
 
-	const Tile* playerTile = player->getTile();
-	return playerTile && playerTile->hasFlag(TILESTATE_PROTECTIONZONE);
 }
 
 void Player::onReceiveMail() const
@@ -1478,7 +1498,7 @@ void Player::setNextActionTask(SchedulerTask* task)
 
 	if (task) {
 		actionTaskEvent = g_scheduler.addEvent(task);
-		resetIdleTime();
+		//resetIdleTime();
 	}
 }
 
@@ -1702,7 +1722,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
-		setBaseXpGain(g_game.getExperienceStage(level)*100);
+		//setBaseXpGain(g_game.getExperienceStage(level)*100);
 		g_game.changeSpeed(this, 0);
 		g_game.addCreatureHealth(this);
 
@@ -4706,9 +4726,9 @@ size_t Player::getMaxDepotItems() const
 	if (group->maxDepotItems != 0) {
 		return group->maxDepotItems;
 	} else if (isPremium()) {
-		return 3000; // its better add limit for max 3000 ea depotId
+		return g_config.getNumber(ConfigManager::PREMIUM_DEPOT_LIMIT);
 	}
-	return 2000;
+	return g_config.getNumber(ConfigManager::FREE_DEPOT_LIMIT);
 }
 
 std::forward_list<Condition*> Player::getMuteConditions() const
@@ -4767,4 +4787,11 @@ void Player::doCriticalDamage(CombatDamage& damage) const
 		damage.secondary.value = (int32_t) (multiplier * damage.secondary.value);
 		damage.critical = true;
 	}
+}
+
+//Custom: Anti bug do market
+bool Player::isMarketExhausted() const {
+	uint32_t exhaust_time = 1000; //half second 500
+
+	return (OTSYS_TIME() - lastMarketInteraction < exhaust_time);
 }

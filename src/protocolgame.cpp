@@ -1072,7 +1072,8 @@ void ProtocolGame::parseCoinTransfer(NetworkMessage& msg)
 	std::string receiverName =msg.getString();
 	uint32_t amount = msg.get<uint32_t>();
 
-	addGameTaskTimed(350, &Game::playerCoinTransfer, player->getID(), receiverName, amount);
+	if(amount > 0)
+		addGameTaskTimed(350, &Game::playerCoinTransfer, player->getID(), receiverName, amount);
 }
 
 void ProtocolGame::parseMarketCreateOffer(NetworkMessage& msg)
@@ -1082,14 +1083,16 @@ void ProtocolGame::parseMarketCreateOffer(NetworkMessage& msg)
 	uint16_t amount = msg.get<uint16_t>();
 	uint32_t price = msg.get<uint32_t>();
 	bool anonymous = (msg.getByte() != 0);
-	addGameTask(&Game::playerCreateMarketOffer, player->getID(), type, spriteId, amount, price, anonymous);
+	if(amount>0 && price >0)
+		addGameTask(&Game::playerCreateMarketOffer, player->getID(), type, spriteId, amount, price, anonymous);
 }
 
 void ProtocolGame::parseMarketCancelOffer(NetworkMessage& msg)
 {
 	uint32_t timestamp = msg.get<uint32_t>();
 	uint16_t counter = msg.get<uint16_t>();
-	addGameTask(&Game::playerCancelMarketOffer, player->getID(), timestamp, counter);
+	if(counter > 0)
+		addGameTask(&Game::playerCancelMarketOffer, player->getID(), timestamp, counter);
 }
 
 void ProtocolGame::parseMarketAcceptOffer(NetworkMessage& msg)
@@ -1097,7 +1100,8 @@ void ProtocolGame::parseMarketAcceptOffer(NetworkMessage& msg)
 	uint32_t timestamp = msg.get<uint32_t>();
 	uint16_t counter = msg.get<uint16_t>();
 	uint16_t amount = msg.get<uint16_t>();
-	addGameTask(&Game::playerAcceptMarketOffer, player->getID(), timestamp, counter, amount);
+	if(amount > 0 && counter > 0)
+		addGameTask(&Game::playerAcceptMarketOffer, player->getID(), timestamp, counter, amount);
 }
 
 void ProtocolGame::parseModalWindowAnswer(NetworkMessage& msg)
@@ -1207,7 +1211,7 @@ void ProtocolGame::sendCreatureType(const Creature* creature, uint8_t creatureTy
 		msg.addByte(creatureType); // type or any byte idk
 	}
 
-	if (creatureType == CREATURETYPE_SUMMONPLAYER && player->getProtocolVersion() >= 1120) {
+		if (creatureType == CREATURETYPE_SUMMONPLAYER && player->getProtocolVersion() >= 1120) {
 		const Creature* master = creature->getMaster();
 		if (master) {
 			msg.add<uint32_t>(master->getID());

@@ -2,46 +2,48 @@
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 worldType = "pvp"
 hotkeyAimbotEnabled = true
-protectionLevel = 50
+protectionLevel = 7
 pzLocked = 60 * 1000
-removeChargesFromRunes = false
+removeChargesFromRunes = true
 removeChargesFromPotions = true
-removeWeaponAmmunition = false
-removeWeaponCharges = false
-timeToDecreaseFrags = 4 * 60 * 60 * 1000
+removeWeaponAmmunition = true
+removeWeaponCharges = true
+timeToDecreaseFrags = 24 * 60 * 60 * 1000
 whiteSkullTime = 15 * 60 * 1000
-stairJumpExhaustion = 500
-experienceByKillingPlayers = true
+stairJumpExhaustion = 2 * 1000
+experienceByKillingPlayers = false
 expFromPlayersLevelRange = 75
-dayKillsToRedSkull = 12
-weekKillsToRedSkull = 84
-monthKillsToRedSkull = 360
-redSkullDuration = 3
-blackSkullDuration = 4
-orangeSkullDuration = 2
+dayKillsToRedSkull = 3
+weekKillsToRedSkull = 5
+monthKillsToRedSkull = 10
+redSkullDuration = 30
+blackSkullDuration = 45
+orangeSkullDuration = 7
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
-ip = "138.197.109.177"
+ip = "127.0.0.1"
 bindOnlyGlobalAddress = false
 loginProtocolPort = 7171
 gameProtocolPort = 7172
 statusProtocolPort = 7171
 maxPlayers = 0
-motd = "Welcome to Ultima Alianza Tibia Global RPG ONLINE: \n \n www.uatibia.com \n\n Follow us in facebook www.facebook.com/uatibia and get the official \n source for news, tips and good assistance for the game.\n Join the community in our Facebook group: https://www.facebook.com/groups/uatibia/\n\n *Have fun! \n\n\n The Administration."
-onePlayerOnlinePerAccount = false
+motd = "Welcome to The OTXServer Global!"
+onePlayerOnlinePerAccount = true
 allowClones = false
-serverName = "UATibia-Global"
+serverName = "OTXServer-Global"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
-maxPacketsPerSecond = 3000
+maxPacketsPerSecond = 25
 
 -- Version Manual
 clientVersionMin = 1100
-clientVersionMax = 1152
-clientVersionStr = "11.49"
+clientVersionMax = 1157
+clientVersionStr = "11.57"
 
 -- Depot Limit
+freeDepotLimit = 2000
+premiumDepotLimit = 10000
 depotBoxes = 17
 
 -- GameStore
@@ -62,8 +64,8 @@ deathLosePercent = -1
 
 -- Houses
 -- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
-housePriceEachSQM = 3000
-houseRentPeriod = "never"
+housePriceEachSQM = 1000
+houseRentPeriod = "daily"
 
 -- Item Usage
 timeBetweenActions = 200
@@ -83,7 +85,7 @@ maxMarketOffersAtATimePerPlayer = 100
 -- MySQL
 mysqlHost = "127.0.0.1"
 mysqlUser = "root"
-mysqlPass = "tunelsecreto27"
+mysqlPass = ""
 mysqlDatabase = "global"
 mysqlPort = 3306
 mysqlSock = ""
@@ -92,23 +94,23 @@ passwordType = "sha1"
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
-kickIdlePlayerAfterMinutes = 1500
-idleWarningTime = 1500 * 60 * 1000
-idleKickTime = 1500 * 60 * 1000
+kickIdlePlayerAfterMinutes = 15
+idleWarningTime = 10 * 60 * 1000
+idleKickTime = 15 * 60 * 1000
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = false
 allowWalkthrough = true
-coinPacketSize = 25
-coinImagesURL = "http://localhost/global/images/store/"
+coinPacketSize = 1
+coinImagesURL = "http://localhost/images/store/"
 classicAttackSpeed = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
-rateExp = stages
+rateExp = 1
 rateSkill = 50
-rateLoot = 4
-rateMagic = 10
+rateLoot = 3
+rateMagic = 25
 rateSpawn = 1
 
 -- Monster rates
@@ -134,7 +136,7 @@ defaultPriority = "high"
 startupDatabaseOptimization = true
 
 -- Status server information
-ownerName = "UATibia Staff"
-ownerEmail = "support@uatibia.com"
-url = "http://www.uatibia.com/global"
-location = "USA"
+ownerName = "Malucooo"
+ownerEmail = "e_nunes@live.com"
+url = "http://www.facebook.com/erick.nunes.75"
+location = "Brazil"
