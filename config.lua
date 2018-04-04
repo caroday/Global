@@ -34,7 +34,7 @@ allowClones = false
 serverName = "UATibia"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
-maxPacketsPerSecond = 25
+maxPacketsPerSecond = 1000
 
 -- Version Manual
 clientVersionMin = 1100
@@ -102,7 +102,7 @@ emoteSpells = false
 classicEquipmentSlots = false
 allowWalkthrough = true
 coinPacketSize = 1
-coinImagesURL = "http://localhost/global/images/store/"
+coinImagesURL = "http://localhost/global11/images/store/"
 classicAttackSpeed = false
 
 -- Rates
