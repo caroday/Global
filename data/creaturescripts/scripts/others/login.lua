@@ -206,7 +206,7 @@ function onLogin(player)
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
     end
 
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report it in http://www.github.com/Tatuy/Global/issues or https://www.facebook.com/groups/uatibia')
+	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[Bugs?] Send us an email with the information at contact@uatibia.com')
    
     -- Events
     for i = 1, #events do
