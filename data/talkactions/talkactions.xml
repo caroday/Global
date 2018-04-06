@@ -62,6 +62,8 @@
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 	<talkaction words="!report" separator=" " script="adminreport.lua"/>
 	
+	<talkaction words="!aol" script="aol.lua"/>
+	<talkaction words="!bless" script="bless.lua"/>
 	<!-- Anti-Entrosa -->
 	<talkaction words="/war" separator=" " script="warPrivate_talkactions.lua" />
 
