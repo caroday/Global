@@ -2,23 +2,23 @@
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 worldType = "pvp"
 hotkeyAimbotEnabled = true
-protectionLevel = 7
+protectionLevel = 50
 pzLocked = 60 * 1000
-removeChargesFromRunes = true
+removeChargesFromRunes = false
 removeChargesFromPotions = true
-removeWeaponAmmunition = true
-removeWeaponCharges = true
-timeToDecreaseFrags = 24 * 60 * 60 * 1000
+removeWeaponAmmunition = false
+removeWeaponCharges = false
+timeToDecreaseFrags = 4 * 60 * 60 * 1000
 whiteSkullTime = 15 * 60 * 1000
-stairJumpExhaustion = 2 * 1000
+stairJumpExhaustion = 500
 experienceByKillingPlayers = false
 expFromPlayersLevelRange = 75
-dayKillsToRedSkull = 5
-weekKillsToRedSkull = 25
-monthKillsToRedSkull = 75
-redSkullDuration = 30
-blackSkullDuration = 45
-orangeSkullDuration = 7
+dayKillsToRedSkull = 12
+weekKillsToRedSkull = 84
+monthKillsToRedSkull = 360
+redSkullDuration = 3
+blackSkullDuration = 4
+orangeSkullDuration = 2
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
@@ -29,7 +29,7 @@ gameProtocolPort = 7172
 statusProtocolPort = 7171
 maxPlayers = 0
 motd = "Welcome to Ultima Alianza Tibia Global RPG ONLINE: \n \n www.uatibia.com \n\n Follow us in facebook www.facebook.com/uatibia and get the official \n source for news, tips and good assistance for the game.\n Join the community in our Facebook group: https://www.facebook.com/groups/uatibia/\n\n *Have fun! \n\n\n The Administration."
-onePlayerOnlinePerAccount = true
+onePlayerOnlinePerAccount = false
 allowClones = false
 serverName = "UATibia"
 statusTimeout = 5 * 1000
@@ -64,8 +64,8 @@ deathLosePercent = -1
 
 -- Houses
 -- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
-housePriceEachSQM = 1000
-houseRentPeriod = "daily"
+housePriceEachSQM = 3000
+houseRentPeriod = "never"
 
 -- Item Usage
 timeBetweenActions = 200
@@ -94,23 +94,23 @@ passwordType = "sha1"
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
-kickIdlePlayerAfterMinutes = 15
-idleWarningTime = 10 * 60 * 1000
-idleKickTime = 15 * 60 * 1000
+kickIdlePlayerAfterMinutes = 1500
+idleWarningTime = 1500 * 60 * 1000
+idleKickTime = 1500 * 60 * 1000
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = false
 allowWalkthrough = true
-coinPacketSize = 1
+coinPacketSize = 25
 coinImagesURL = "http://localhost/global11/images/store/"
 classicAttackSpeed = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
 rateExp = stages
-rateSkill = 20
-rateLoot = 2.5
-rateMagic = 7
+rateSkill = 50
+rateLoot = 4
+rateMagic = 10
 rateSpawn = 1
 
 -- Monster rates
@@ -138,5 +138,5 @@ startupDatabaseOptimization = true
 -- Status server information
 ownerName = "UATibia Staff"
 ownerEmail = "support@uatibia.com"
-url = "http://www.uatibia.com/global"
+url = "http://www.uatibia.com/global11"
 location = "USA"
