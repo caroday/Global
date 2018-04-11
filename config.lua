@@ -22,7 +22,7 @@ orangeSkullDuration = 3
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
-ip = "138.197.111.157"
+ip = "159.203.78.218"
 bindOnlyGlobalAddress = false
 loginProtocolPort = 7171
 gameProtocolPort = 7172
