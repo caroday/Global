@@ -36804,14 +36804,14 @@
 	<item id="28999"  article="a" name="dandelion seeds" />
 	<item id="29000"  article="a" name="colourful snail shell" />
 	<item id="29001"  article="a" name="green bandage" />
-	  <item id="29002"  article="a" name="butterfly ring" >
+	<item id="29002"  article="a" name="butterfly ring" >
 	<attribute key="slotType" value="ring" />
 	<attribute key="armor" value="2" />
 	<attribute key="absorbPercentDeath" value="3" />
-   <attribute key="weight" value="90" />
+   <attribute key="weight" value="120" />
 	</item>
 	<item id="29003" article="a" name="wooden spellbook">
-		<attribute key="weight" value="3000" />
+		<attribute key="weight" value="1200" />
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="absorbPercentEarth" value="5" />
 		<attribute key="defense" value="16" />
@@ -36859,7 +36859,10 @@
 	</item>
 	<item fromid="29026" toid="29028" article="an" name="Unknown" />
 	<item id="29029" article="a" name="dark moon mirror" />
+		<attribute key="weight" value="2000" />
 	<item id="29030" article="a" name="moon mirror" />
+		<attribute key="absorbPercentDeath" value="5" />
+		<attribute key="weight" value="200" />
 	<item id="29031"  article="an" name="Empty starlight vial" />
 	<item id="29032"  article="a" name="gleaming starlight vial" />
 	<item id="29033"  article="a" name="shining sun catcher" />
@@ -37623,15 +37626,18 @@
 	<item id="29210" article="a" name="Moon Mirror" >  
  		<attribute key="weight" value="200" />
 		<attribute key="slotType" value="ammo" />
-		<attribute key="absorbPercentFire" value="5" />
+		<attribute key="absorbPercentDeath" value="5" />
+		<attribute key="slotType" value="ammo" />
      </item>
 	<item id="29211" article="a" name="Gleaming Starlight Vial" >  
- 		<attribute key="weight" value="1200" />
+ 	 	<attribute key="weight" value="200" />
+		<attribute key="slotType" value="ammo" />
+		<attribute key="absorbPercentManaDrain" value="5" />
      </item>
 	<item id="29212" article="a" name="Shining Sun Catcher" >  
  		<attribute key="weight" value="200" />
 		<attribute key="slotType" value="ammo" />
-		<attribute key="absorbPercentDeath" value="5" />
+		<attribute key="absorbPercentFire" value="5" />
 		</item>
 	<item id="29214" article="a" name="Draken Doll Replica" >  
 		<attribute key="description" value="Souvenir from Thais Museum." />

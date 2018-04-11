@@ -54,9 +54,7 @@
 	</voices>
 	<loot>
 		<item name="small sapphire" chance="5000" />
-		<item name="gold coin" countmax="100" chance="43000" />
-		<item name="gold coin" countmax="87" chance="50000" />
+		<item id="2148" countmax="200" chance="92000" /> <!-- gold coin -->
 		<item name="royal helmet" chance="270" />
-		<item name="goosebump leather" chance="10000" />
 	</loot>
 </monster>

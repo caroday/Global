@@ -77,12 +77,12 @@
 		<item name="crown shield" chance="740" />
 		<item name="demon shield" chance="170" />
 		<item name="fire mushroom" countmax="6" chance="20600" />
-		<item name="red powder" chance="1000" />
+		<item id="5906" chance="1000" /> <!-- demon dust -->
 		<item name="assassin star" countmax="10" chance="8340" />
 		<item name="demonrage sword" chance="350" />
 		<item name="great mana potion" countmax="2" chance="18000" />
 		<item name="ultimate health potion" countmax="3" chance="20500" />
 		<item name="small topaz" countmax="5" chance="9300" />
-		<item name="cluster of solace" chance="410" />
+		<item name="cluster of solace" chance="550" />
 	</loot>
 </monster>

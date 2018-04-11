@@ -1498,7 +1498,7 @@ void Player::setNextActionTask(SchedulerTask* task)
 
 	if (task) {
 		actionTaskEvent = g_scheduler.addEvent(task);
-		//resetIdleTime();
+		resetIdleTime();
 	}
 }
 

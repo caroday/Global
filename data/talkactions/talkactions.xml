@@ -45,6 +45,7 @@
 	<talkaction words="/B" separator=" " script="broadcast.lua" />
 	<talkaction words="/looktype" separator=" " script="looktype.lua" />
 	<talkaction words="/mute" script="mute.lua" />
+	<talkaction words="/addstutor" separator=" " script="add_stutor.lua" />
 
 	<!-- Senior Tutors -->
 	<talkaction words="/addtutor" separator=" " script="add_tutor.lua" />
@@ -62,8 +63,6 @@
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 	<talkaction words="!report" separator=" " script="adminreport.lua"/>
 	
-	<talkaction words="!aol" script="aol.lua"/>
-	<talkaction words="!bless" script="bless.lua"/>
 	<!-- Anti-Entrosa -->
 	<talkaction words="/war" separator=" " script="warPrivate_talkactions.lua" />
 

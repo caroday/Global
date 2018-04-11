@@ -4,6 +4,17 @@
 <movevent event="StepIn" actionid="15998" script="tp999.lua" />
 <movevent event="StepIn" actionid="15999" script="tp999exit.lua" />
 
+<!-- Threatened Dreams -->
+	<movevent event="Equip" itemid="29002" slot="ring" level="50" function="onEquipItem" />
+	<movevent event="DeEquip" itemid="29002" slot="ring" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="29003" slot="shield" level="80" function="onEquipItem">
+		<vocation name="Sorcerer" />
+		<vocation name="Master Sorcerer" showInDescription="0" />
+		<vocation name="Druid" />
+		<vocation name="Elder Druid" showInDescription="0" />
+	</movevent>
+	<movevent event="DeEquip" itemid="29003" slot="shield" function="onDeEquipItem" />
+
 <!-- Halls of Hope TPs -->
 <movevent event="StepIn" actionid="62147" script="hallsofhope/death.lua" />
 <movevent event="StepIn" actionid="62148" script="hallsofhope/energy.lua" />
@@ -2297,14 +2308,6 @@
 		<vocation name="Elder Druid" showInDescription="0" />
 	</movevent>
 	<movevent event="DeEquip" itemid="22424" slot="shield" function="onDeEquipItem" />
-
-	<movevent event="Equip" itemid="29003" slot="shield" level="250" function="onEquipItem">
-		<vocation name="Sorcerer" />
-		<vocation name="Master Sorcerer" showInDescription="0" />
-		<vocation name="Druid" />
-		<vocation name="Elder Druid" showInDescription="0" />
-	</movevent>
-	<movevent event="DeEquip" itemid="29003" slot="shield" function="onDeEquipItem" />
 
 	<!-- Imbuement Movements -->
 	<!-- If certain equipment is not below, it has already been entered above by default -->
