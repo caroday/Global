@@ -206,7 +206,7 @@ function onLogin(player)
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
     end
 
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Reporte em http://www.github.com/malucooo/otxserver-new/issues')
+	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report in http://www.uatibia.com')
    
     -- Events
     for i = 1, #events do
