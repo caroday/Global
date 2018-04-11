@@ -49,5 +49,5 @@
 	<globalevent name="checkInbox" interval="30000" script="others/checkInbox.lua"/>
 	<globalevent interval="100000" name="GuildWar" script="guildwar.lua"/>
 	<globalevent interval="1800000" name="AutoSave" script="autosave.lua"/>
-	<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>
+	<!--<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>-->
 </globalevents>
