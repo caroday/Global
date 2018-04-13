@@ -13,12 +13,12 @@ whiteSkullTime = 15 * 60 * 1000
 stairJumpExhaustion = 2 * 1000
 experienceByKillingPlayers = false
 expFromPlayersLevelRange = 75
-dayKillsToRedSkull = 6
-weekKillsToRedSkull = 10
-monthKillsToRedSkull = 20
+dayKillsToRedSkull = 5
+weekKillsToRedSkull = 25
+monthKillsToRedSkull = 75
 redSkullDuration = 15
-blackSkullDuration = 22
-orangeSkullDuration = 3
+blackSkullDuration = 23
+orangeSkullDuration = 4
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
@@ -28,13 +28,13 @@ loginProtocolPort = 7171
 gameProtocolPort = 7172
 statusProtocolPort = 7171
 maxPlayers = 0
-motd = "Welcome to The UATibia Global!"
-onePlayerOnlinePerAccount = true
+motd = "Welcome to Ultima Alianza Tibia Global RPG ONLINE: \n \n www.uatibia.com \n\n Follow us in facebook www.facebook.com/uatibia and get the official \n source for news, tips and good assistance for the game.\n Join the community in our Facebook group: https://www.facebook.com/groups/uatibia/\n\n *Have fun! \n\n\n The Administration."
+onePlayerOnlinePerAccount = false
 allowClones = false
 serverName = "UATibia"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
-maxPacketsPerSecond = 25
+maxPacketsPerSecond = 1000
 
 -- Version Manual
 clientVersionMin = 1100
@@ -94,12 +94,12 @@ passwordType = "sha1"
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
-kickIdlePlayerAfterMinutes = 15
-idleWarningTime = 10 * 60 * 1000
-idleKickTime = 15 * 60 * 1000
+kickIdlePlayerAfterMinutes = 1500
+idleWarningTime = 1500 * 60 * 1000
+idleKickTime = 1500 * 60 * 1000
 maxMessageBuffer = 4
 emoteSpells = false
-classicEquipmentSlots = false
+classicEquipmentSlots = true
 allowWalkthrough = true
 coinPacketSize = 1
 coinImagesURL = "http://localhost/global/images/store/"
@@ -136,7 +136,7 @@ defaultPriority = "high"
 startupDatabaseOptimization = true
 
 -- Status server information
-ownerName = "Rafael Zunniga (Tatuy)"
-ownerEmail = "rafael.zunniga@gmail.com"
+ownerName = "UATibia Staff"
+ownerEmail = "contact@uatibia.com"
 url = "http://www.uatibia.com"
 location = "USA"
