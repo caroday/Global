@@ -52,10 +52,6 @@ void ProtocolGame::release()
 	//dispatcher thread
 	stopLiveCast();
 	if (player && player->client == shared_from_this()) {
-		if (player->getTile() && (player->getTile()->hasFlag(TILESTATE_PROTECTIONZONE) || !player->hasCondition(CONDITION_INFIGHT))) {
-			logout(true, true);
-		}
-
 		player->client.reset();
 		player->decrementReferenceCounter();
 		player = nullptr;

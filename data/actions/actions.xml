@@ -738,6 +738,7 @@
 	<action actionid="5632" script="quests/serpentineTowerTorch.lua" />
 	<action actionid="5633" script="quests/serpentineTowerLever.lua" />
 	<action actionid="4210" script="quests/senjaCastleLever.lua" />
+	<action actionid="19910" script="quests/stealfromthieves.lua" />
 
 	<!-- Tools -->
 	<action itemid="13158" script="tools/present.lua" />

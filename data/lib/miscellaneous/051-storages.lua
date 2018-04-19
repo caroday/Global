@@ -330,6 +330,7 @@ Storage = {
 		WizardAddon = 12066,
 
 		-- Pirate-outfit Quest
+		PirateBaseOutfit = 50003,
 		PirateSabreAddon = 50002,
 		PirateHatAddon = 22034,
 
@@ -821,7 +822,9 @@ Storage = {
 		WhisperMoss = 50033,
 		OldParchment = 50034,
 
-		DragahsSpellbook = 50148
+		DragahsSpellbook = 50148,
+		
+		StealFromThieves = 19910
 	},
 	PitsOfInferno = {
 		ShortcutHub = 8819,
