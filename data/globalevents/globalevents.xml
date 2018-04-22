@@ -37,7 +37,7 @@
 	<!-- Others --> 
 	<globalevent type="startup" name="ServerStartup" script="startup.lua" />
 	<globalevent type="record" name="PlayerRecord" script="record.lua" />
-	<globalevent name="ServerSave" time="07:55:00" script="serversave.lua" />	
+	<globalevent name="ServerSave" time="05:55:00" script="serversave.lua" />	
 	<globalevent type="startup" name="rashid" script="rashid.lua"/>
 	<globalevent type="startup" name="yasir" script="worldchanges/yasir.lua"/>	
 	<!-- raid --> 
@@ -49,5 +49,5 @@
 	<globalevent name="checkInbox" interval="30000" script="others/checkInbox.lua"/>
 	<globalevent interval="100000" name="GuildWar" script="guildwar.lua"/>
 	<globalevent interval="1800000" name="AutoSave" script="autosave.lua"/>
-	<!--<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>-->
+	<globalevent name="autoBroadcast" interval="900000" script="autobroadcast.lua"/>
 </globalevents>

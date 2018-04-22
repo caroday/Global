@@ -42,7 +42,7 @@
  	<event type="death" name="BossDeath" script="rewardChest/boss.lua" />
  	<event type="healthchange" name="BossParticipation" script="rewardChest/boss.lua" />
  	<event type="think" name="BossThink" script="rewardChest/boss.lua" />
-	<event type="healthchange" name="HealGaz" script="gaz'haragoth heal.lua"/>	
+   <event type="think" name="GazharagothHeal" script="others/gaz'haragoth_heal.lua" />
 
 
     <!-- Bigfoot Burden Quest -->

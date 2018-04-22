@@ -19,7 +19,7 @@
 		<flag runonhealth="0" />
 	</flags>
 	<script>
-    <event name="HealGaz" />
+    <event name="GazharagothHeal" />
     </script>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-5000" />
