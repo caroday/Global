@@ -208,7 +208,7 @@ function onLogin(player)
 
 	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report in http://www.uatibia.com')
 	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMUNITY] https://www.facebook.com/groups/uatibia')
-    player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMANDS] !buyhouse, !leavehouse, !sellhouse, !uptime, !online, !serverinfo, !report, /war, !cast, !stopcast, !spectators.')
+    player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMANDS] !buyhouse, !leavehouse, !sellhouse, !uptime, !online, !serverinfo, !report, /war, !cast, !stopcast, !spectators, !outfit, !frags, !kills, !aol, !bless.')
    
     -- Events
     for i = 1, #events do

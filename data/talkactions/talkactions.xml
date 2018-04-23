@@ -62,7 +62,7 @@
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 	<talkaction words="!report" separator=" " script="adminreport.lua"/>
-	
+
 	<!-- Anti-Entrosa -->
 	<talkaction words="/war" separator=" " script="warPrivate_talkactions.lua" />
 
@@ -70,4 +70,11 @@
 	<talkaction words="!cast" separator=" " script="start_cast.lua" />
 	<talkaction words="!stopcast" script="stop_cast.lua" />
 	<talkaction words="!spectators" script="spectators.lua" />
+	
+	<!-- Ultima Alianza Tibia -->
+	<talkaction words="!outfit" script="guild_outfit.lua"/>
+	<talkaction words="!frags" script="kills.lua" />
+	<talkaction words="!kills" script="kills.lua" />
+	<talkaction words="!aol" script="aol.lua"/>
+	<talkaction words="!bless" script="bless.lua"/>
 </talkactions>
