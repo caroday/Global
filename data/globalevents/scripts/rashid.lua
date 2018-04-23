@@ -15,6 +15,16 @@ function onStartup()
    local day = os.date("*t").wday
    if days[day] then
       doCreateNpc("Rashid", days[day])
+	  --Ultima Alianza Tibia
+	  doCreateNpc("Addon", {x = 32358, y = 32234, z = 7})
+	  doCreateNpc("Alesar", {x = 32362, y = 32227, z = 7})
+	  doCreateNpc("Nah'bob", {x = 32362, y = 32219, z = 7})
+	  doCreateNpc("Yaman", {x = 32362, y = 32221, z = 6})
+	  doCreateNpc("Haroun", {x = 32362, y = 32227, z = 6})
+	  doCreateNpc("Rashid", {x = 32357, y = 32231, z = 6})
+	  doCreateNpc("Edvard", {x = 32359, y = 32236, z = 6})
+	  doCreateNpc("Grizzly Adams", {x = 32354, y = 32209, z = 7})
+	  --endUltima Alianza Tibia
    else
       print("[!] -> Cannot create Rashid. Day: " .. day .. ".")
    end
