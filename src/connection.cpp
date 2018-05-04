@@ -152,12 +152,9 @@ void Connection::parseHeader(const boost::system::error_code& error)
 
 	uint32_t timePassed = std::max<uint32_t>(1, (time(nullptr) - timeConnected) + 1);
 	if ((++packetsSent / timePassed) > static_cast<uint32_t>(g_config.getNumber(ConfigManager::MAX_PACKETS_PER_SECOND))) {
-		const auto client = std::dynamic_pointer_cast<ProtocolGame>(protocol);
-		if (client) {
-			std::cout << convertIPToString(getIP()) << " disconnected for exceeding packet per second limit." << std::endl;
-			close();
-			return;
-		}
+		std::cout << convertIPToString(getIP()) << " disconnected for exceeding packet per second limit." << std::endl;
+		close();
+		return;
 	}
 
 	if (!receivedLastChar && connectionState == CONNECTION_STATE_CONNECTING_STAGE2) {
@@ -240,10 +237,19 @@ void Connection::parsePacket(const boost::system::error_code& error)
 		return;
 	}
 
-	//Check packet
-	uint32_t recvPacket = msg.get<uint32_t>();
-	if ((recvPacket & 1 << 31) != 0) {
-		//std::cout << "CCompress" << std::endl;
+	//Check packet checksum
+	uint32_t checksum;
+	int32_t len = msg.getLength() - msg.getBufferPosition() - NetworkMessage::CHECKSUM_LENGTH;
+	if (len > 0) {
+		checksum = adlerChecksum(msg.getBuffer() + msg.getBufferPosition() + NetworkMessage::CHECKSUM_LENGTH, len);
+	} else {
+		checksum = 0;
+	}
+
+	uint32_t recvChecksum = msg.get<uint32_t>();
+	if (recvChecksum != checksum) {
+		// it might not have been the checksum, step back
+		msg.skipBytes(-NetworkMessage::CHECKSUM_LENGTH);
 	}
 
 	if (!receivedFirst) {
@@ -251,24 +257,19 @@ void Connection::parsePacket(const boost::system::error_code& error)
 		receivedFirst = true;
 
 		if (!protocol) {
-			// As of 11.11+ update, we need to check if it's a outdated client or a status client server with this ugly check
-			if(msg.getLength() < 280) {
-				msg.skipBytes(-NetworkMessage::CHECKSUM_LENGTH); //those 32bits read up there
-			}
-
 			// Game protocol has already been created at this point
-			protocol = service_port->make_protocol(true, msg, shared_from_this());
+			protocol = service_port->make_protocol(recvChecksum == checksum, msg, shared_from_this());
 			if (!protocol) {
 				close(FORCE_CLOSE);
 				return;
 			}
 		} else {
-			msg.skipBytes(1); // Skip protocol ID
+			msg.skipBytes(1);    // Skip protocol ID
 		}
 
 		protocol->onRecvFirstMessage(msg);
 	} else {
-		protocol->onRecvMessage(msg); // Send the packet to the current protocol
+		protocol->onRecvMessage(msg);    // Send the packet to the current protocol
 	}
 
 	try {
@@ -305,7 +306,6 @@ void Connection::internalSend(const OutputMessage_ptr& msg)
 	if (msg->isBroadcastMsg()) {
 		dispatchBroadcastMessage(msg);
 	}
-
 	protocol->onSendMessage(msg);
 	try {
 		writeTimer.expires_from_now(boost::posix_time::seconds(Connection::write_timeout));

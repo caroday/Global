@@ -1,25 +1,3 @@
--- function onSay(cid, words, param, channel)
-      --  if getPlayerBlessing(cid, 5) == FALSE then
-              --  if getPlayerMoney(cid) >= 50000 then
-                       -- for i = 1,5 do
-                      --          doPlayerAddBlessing(cid, i)
-                     --   end
-                   --     doSendMagicEffect(getCreaturePosition(cid), 50)
-                 --       doPlayerRemoveMoney(cid, 50000)
-               --         doSendMagicEffect(getPlayerPosition(cid), CONST_ME_HOLYDAMAGE)
-             --          doPlayerSendTextMessage(cid, 22, "You have been blessed by the gods!")
-              --  else
-             --           doPlayerSendCancel(cid, "Sorry, but you dont have 5cc")
-            --            doSendMagicEffect(getCreaturePosition(cid), CONST_ME_POFF)
-           --     end
-       -- else
-          --      doPlayerSendCancel(cid, "You have already been blessed.")
-          --      doSendMagicEffect(getCreaturePosition(cid), CONST_ME_POFF)
-     --   end
---return true
---end 
-
-
 function getCost(level)
 	if level <= 30 then
 		return 2000*5
@@ -38,7 +16,7 @@ function onSay(cid, words, param)
 			p:sendCancelMessage("You have already been blessed by the gods.")
 			return false
 		end
-		if(p:removeMoney(cost)) then
+		if(p:removeMoneyNpc(cost)) then
 			for b = 1,6 do
 				p:addBlessing(b)
 			end

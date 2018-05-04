@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,11 @@
 #include "otpch.h"
 
 #include "monster.h"
-#include "configmanager.h"
 #include "game.h"
 #include "spells.h"
 
 extern Game g_game;
 extern Monsters g_monsters;
-extern ConfigManager g_config;
 
 int32_t Monster::despawnRange;
 int32_t Monster::despawnRadius;
@@ -42,20 +40,22 @@ Monster* Monster::createMonster(const std::string& name)
 	return new Monster(mType);
 }
 
-Monster::Monster(MonsterType* mType) :
+Monster::Monster(MonsterType* mtype) :
 	Creature(),
-	strDescription(asLowerCaseString(mType->nameDescription)),
-	mType(mType)
+	strDescription(asLowerCaseString(mtype->nameDescription)),
+	mType(mtype)
 {
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
 	skull = mType->info.skull;
-	float multiplier = g_config.getFloat(ConfigManager::RATE_MONSTER_HEALTH);
-	health = mType->info.health*multiplier;
-	healthMax = mType->info.healthMax*multiplier;
+	health = mType->info.health;
+	healthMax = mType->info.healthMax;
 	baseSpeed = mType->info.baseSpeed;
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
+
+	timeOfLastHit = 0;
+	hadRecentBattleVar = false;
 
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {
@@ -83,20 +83,21 @@ void Monster::removeList()
 
 bool Monster::canSee(const Position& pos) const
 {
-	return Creature::canSee(getPosition(), pos, 10, 10); //jlcvp FIX - range 10 Avoids killing monster without reaction
+	return Creature::canSee(getPosition(), pos, 9, 9);
 }
 
 bool Monster::canWalkOnFieldType(CombatType_t combatType) const
-{
+ {
 	switch (combatType) {
 		case COMBAT_ENERGYDAMAGE:
 			return mType->info.canWalkOnEnergy;
-		case COMBAT_FIREDAMAGE:
-			return mType->info.canWalkOnFire;
-		case COMBAT_EARTHDAMAGE:
-				return mType->info.canWalkOnPoison;
-			default:
-		return true;
+			case COMBAT_FIREDAMAGE:
+				return mType->info.canWalkOnFire;
+				case COMBAT_EARTHDAMAGE:
+					return mType->info.canWalkOnPoison;
+					default:
+						return true;
+						
 	}
 }
 
@@ -189,7 +190,7 @@ void Monster::onRemoveCreature(Creature* creature, bool isLogout)
 }
 
 void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
-							 const Tile* oldTile, const Position& oldPos, bool teleport)
+                             const Tile* oldTile, const Position& oldPos, bool teleport)
 {
 	Creature::onCreatureMove(creature, newTile, newPos, oldTile, oldPos, teleport);
 
@@ -239,7 +240,7 @@ void Monster::onCreatureMove(Creature* creature, const Tile* newTile, const Posi
 		}
 
 		if (canSeeNewPos && isSummon() && getMaster() == creature) {
-			isMasterInRange = true; //Follow master again
+			isMasterInRange = true;    //Follow master again
 		}
 
 		updateIdleStatus();
@@ -366,10 +367,10 @@ void Monster::updateTargetList()
 		}
 	}
 
-	SpectatorHashSet spectators;
-	g_game.map.getSpectators(spectators, position, true);
-	spectators.erase(this);
-	for (Creature* spectator : spectators) {
+	SpectatorVec list;
+	g_game.map.getSpectators(list, position, true);
+	list.erase(this);
+	for (Creature* spectator : list) {
 		if (canSee(spectator->getPosition())) {
 			onCreatureFound(spectator);
 		}
@@ -451,7 +452,7 @@ bool Monster::isOpponent(const Creature* creature) const
 		}
 	} else {
 		if ((creature->getPlayer() && !creature->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) ||
-				(creature->getMaster() && creature->getMaster()->getPlayer())) {
+		        (creature->getMaster() && creature->getMaster()->getPlayer())) {
 			return true;
 		}
 	}
@@ -584,7 +585,7 @@ void Monster::onFollowCreatureComplete(const Creature* creature)
 }
 
 BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-							  bool checkDefense /* = false*/, bool checkArmor /* = false*/, bool /* field = false */)
+                              bool checkDefense /* = false*/, bool checkArmor /* = false*/, bool /* field = false */)
 {
 	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, checkDefense, checkArmor);
 
@@ -611,7 +612,7 @@ BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32
 bool Monster::isTarget(const Creature* creature) const
 {
 	if (creature->isRemoved() || !creature->isAttackable() ||
-			creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature)) {
+	        creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature)) {
 		return false;
 	}
 
@@ -624,10 +625,6 @@ bool Monster::isTarget(const Creature* creature) const
 bool Monster::selectTarget(Creature* creature)
 {
 	if (!isTarget(creature)) {
-		return false;
-	}
-
-	if (isPassive() && !hasBeenAttacked(creature->getID())) {
 		return false;
 	}
 
@@ -679,6 +676,7 @@ void Monster::updateIdleStatus()
 void Monster::onAddCondition(ConditionType_t type)
 {
 	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
+		ignoreFieldDamage = false;
 		updateMapCache();
 	}
 
@@ -688,7 +686,6 @@ void Monster::onAddCondition(ConditionType_t type)
 void Monster::onEndCondition(ConditionType_t type)
 {
 	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
-		ignoreFieldDamage = false;
 		updateMapCache();
 	}
 
@@ -697,6 +694,8 @@ void Monster::onEndCondition(ConditionType_t type)
 
 void Monster::onThink(uint32_t interval)
 {
+	updateHadRecentBattleVar();
+
 	Creature::onThink(interval);
 
 	if (mType->info.thinkEvent != -1) {
@@ -787,14 +786,8 @@ void Monster::doAttacking(uint32_t interval)
 					updateLook = false;
 				}
 
-				float multiplier;
-				if(maxCombatValue > 0) //defense
-					multiplier = g_config.getFloat(ConfigManager::RATE_MONSTER_DEFENSE);
-				else //attack
-					multiplier = g_config.getFloat(ConfigManager::RATE_MONSTER_ATTACK);
-
-				minCombatValue = spellBlock.minCombatValue * multiplier;
-				maxCombatValue = spellBlock.maxCombatValue * multiplier;
+				minCombatValue = spellBlock.minCombatValue;
+				maxCombatValue = spellBlock.maxCombatValue;
 				spellBlock.spell->castSpell(this, attackedCreature);
 
 				if (spellBlock.isMelee) {
@@ -834,7 +827,7 @@ bool Monster::canUseAttack(const Position& pos, const Creature* target) const
 }
 
 bool Monster::canUseSpell(const Position& pos, const Position& targetPos,
-						  const spellBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks)
+                          const spellBlock_t& sb, uint32_t interval, bool& inRange, bool& resetTicks)
 {
 	inRange = true;
 
@@ -960,14 +953,15 @@ void Monster::onThinkDefense(uint32_t interval)
 
 			Monster* summon = Monster::createMonster(summonBlock.name);
 			if (summon) {
-				if (g_game.placeCreature(summon, getPosition(), false, summonBlock.force)) {
-					summon->setDropLoot(false);
-					summon->setSkillLoss(false);
-					summon->setMaster(this);
+				const Position& summonPos = getPosition();
+
+				addSummon(summon);
+
+				if (!g_game.placeCreature(summon, summonPos, false, summonBlock.force)) {
+					removeSummon(summon);
+				} else {
 					g_game.addMagicEffect(getPosition(), CONST_ME_MAGIC_BLUE);
 					g_game.addMagicEffect(summon->getPosition(), CONST_ME_TELEPORT);
-				} else {
-					delete summon;
 				}
 			}
 		}
@@ -1043,7 +1037,7 @@ void Monster::pushItems(Tile* tile)
 		for (int32_t i = downItemSize; --i >= 0;) {
 			Item* item = items->at(i);
 			if (item && item->hasProperty(CONST_PROP_MOVEABLE) && (item->hasProperty(CONST_PROP_BLOCKPATH)
-					|| item->hasProperty(CONST_PROP_BLOCKSOLID))) {
+			        || item->hasProperty(CONST_PROP_BLOCKSOLID))) {
 				if (moveCount < 20 && Monster::pushItem(item)) {
 					++moveCount;
 				} else if (g_game.internalRemoveItem(item) == RETURNVALUE_NOERROR) {
@@ -1133,7 +1127,7 @@ bool Monster::getNextStep(Direction& direction, uint32_t& flags)
 			if (ignoreFieldDamage) {
 				ignoreFieldDamage = false;
 				updateMapCache();
-			}
+				}
 			//target dancing
 			if (attackedCreature && attackedCreature == followCreature) {
 				if (isFleeing()) {
@@ -1181,7 +1175,7 @@ bool Monster::getRandomStep(const Position& creaturePos, Direction& direction) c
 }
 
 bool Monster::getDanceStep(const Position& creaturePos, Direction& direction,
-						   bool keepAttack /*= true*/, bool keepDistance /*= true*/)
+                           bool keepAttack /*= true*/, bool keepDistance /*= true*/)
 {
 	bool canDoAttackNow = canUseAttack(creaturePos, attackedCreature);
 
@@ -1783,7 +1777,8 @@ void Monster::death(Creature*)
 
 	for (Creature* summon : summons) {
 		summon->changeHealth(-summon->getHealth());
-		summon->removeMaster();
+		summon->setMaster(nullptr);
+		summon->decrementReferenceCounter();
 	}
 	summons.clear();
 
@@ -1841,14 +1836,8 @@ bool Monster::getCombatValues(int32_t& min, int32_t& max)
 		return false;
 	}
 
-	float multiplier;
-	if(maxCombatValue > 0) //defense
-		multiplier = g_config.getFloat(ConfigManager::RATE_MONSTER_DEFENSE);
-	else //attack
-		multiplier = g_config.getFloat(ConfigManager::RATE_MONSTER_ATTACK);
-
-	min = minCombatValue * multiplier;
-	max = maxCombatValue * multiplier;
+	min = minCombatValue;
+	max = maxCombatValue;
 	return true;
 }
 
@@ -1935,7 +1924,22 @@ void Monster::changeHealth(int32_t healthChange, bool sendHealthChange/* = true*
 {
 	//In case a player with ignore flag set attacks the monster
 	setIdle(false);
+
+	if(healthChange < 0){
+		timeOfLastHit = OTSYS_TIME();
+		updateHadRecentBattleVar();
+	}
+
 	Creature::changeHealth(healthChange, sendHealthChange);
+}
+
+void Monster::updateHadRecentBattleVar()
+{
+	bool newRecentBattleVar = ((timeOfLastHit > 0) && OTSYS_TIME() < timeOfLastHit + 30000);
+	if(newRecentBattleVar != hadRecentBattleVar){
+		hadRecentBattleVar = newRecentBattleVar;
+		updateMapCache();
+	}
 }
 
 bool Monster::challengeCreature(Creature* creature)
@@ -1950,6 +1954,66 @@ bool Monster::challengeCreature(Creature* creature)
 		targetChangeTicks = 0;
 	}
 	return result;
+}
+
+bool Monster::convinceCreature(Creature* creature)
+{
+	Player* player = creature->getPlayer();
+	if (player && !player->hasFlag(PlayerFlag_CanConvinceAll)) {
+		if (!mType->info.isConvinceable) {
+			return false;
+		}
+	}
+
+	if (isSummon()) {
+		if (getMaster()->getPlayer()) {
+			return false;
+		} else if (getMaster() == creature) {
+			return false;
+		}
+
+		Creature* oldMaster = getMaster();
+		oldMaster->removeSummon(this);
+	}
+
+	creature->addSummon(this);
+
+	setFollowCreature(nullptr);
+	setAttackedCreature(nullptr);
+
+	//destroy summons
+	for (Creature* summon : summons) {
+		summon->changeHealth(-summon->getHealth());
+		summon->setMaster(nullptr);
+		summon->decrementReferenceCounter();
+	}
+	summons.clear();
+
+	isMasterInRange = true;
+	updateTargetList();
+	updateIdleStatus();
+
+	//Notify surrounding about the change
+	SpectatorVec list;
+	g_game.map.getSpectators(list, getPosition(), true);
+	g_game.map.getSpectators(list, creature->getPosition(), true);
+	for (Creature* spectator : list) {
+		spectator->onCreatureConvinced(creature, this);
+	}
+
+	if (spawn) {
+		spawn->removeMonster(this);
+		spawn = nullptr;
+	}
+	return true;
+}
+
+void Monster::onCreatureConvinced(const Creature* convincer, const Creature* creature)
+{
+	if (convincer != this && (isFriend(creature) || isOpponent(creature))) {
+		updateTargetList();
+		updateIdleStatus();
+	}
 }
 
 void Monster::getPathSearchParams(const Creature* creature, FindPathParams& fpp) const

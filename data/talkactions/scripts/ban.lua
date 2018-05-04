@@ -1,5 +1,3 @@
-local banDays = 9999
-
 function onSay(player, words, param)
 	if not player:getGroup():getAccess() then
 		return true
@@ -7,11 +5,14 @@ function onSay(player, words, param)
 
 	local name = param
 	local reason = ''
+	local banDays = 30
+	local params = param:split(',')
 
 	local separatorPos = param:find(',')
 	if separatorPos ~= nil then
-		name = param:sub(0, separatorPos - 1)
-		reason = string.trim(param:sub(separatorPos + 1))
+		name =  string.trim(params[1])
+		reason =  string.trim(params[2])
+		banDays = tonumber(params[3]:trim())
 	end
 
 	local accountId = getAccountNumberByPlayerName(name)

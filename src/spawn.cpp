@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,12 @@
 #include "monster.h"
 #include "configmanager.h"
 #include "scheduler.h"
-#include "events.h"
 
 #include "pugicast.h"
 
-extern Events* g_events;
 extern ConfigManager g_config;
 extern Monsters g_monsters;
 extern Game g_game;
-extern Events* g_events;
 
 static constexpr int32_t MINSPAWN_INTERVAL = 1000;
 
@@ -162,7 +159,7 @@ bool Spawns::isInZone(const Position& centerPos, int32_t radius, const Position&
 	}
 
 	return ((pos.getX() >= centerPos.getX() - radius) && (pos.getX() <= centerPos.getX() + radius) &&
-			(pos.getY() >= centerPos.getY() - radius) && (pos.getY() <= centerPos.getY() + radius));
+	        (pos.getY() >= centerPos.getY() - radius) && (pos.getY() <= centerPos.getY() + radius));
 }
 
 void Spawn::startSpawnCheck()
@@ -183,9 +180,9 @@ Spawn::~Spawn()
 
 bool Spawn::findPlayer(const Position& pos)
 {
-	SpectatorHashSet spectators;
-	g_game.map.getSpectators(spectators, pos, false, true);
-	for (Creature* spectator : spectators) {
+	SpectatorVec list;
+	g_game.map.getSpectators(list, pos, false, true);
+	for (Creature* spectator : list) {
 		if (!spectator->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) {
 			return true;
 		}
@@ -220,7 +217,6 @@ bool Spawn::spawnMonster(uint32_t spawnId, MonsterType* mType, const Position& p
 
 	spawnedMap.insert(spawned_pair(spawnId, monster));
 	spawnMap[spawnId].lastSpawn = OTSYS_TIME();
-	g_events->eventMonsterOnSpawn(monster, pos);
 	return true;
 }
 
@@ -257,7 +253,7 @@ void Spawn::checkSpawn()
 			if (sb.mType->info.isBlockable) {
 				spawnMonster(spawnId, sb.mType, sb.pos, sb.direction);
 			} else {
-				scheduleSpawn(spawnId, sb, 3 * NONBLOCKABLE_SPAWN_INTERVAL);
+				scheduleSpawn(spawnId, sb, 4200);
 			}
 
 			if (++spawnCount >= static_cast<uint32_t>(g_config.getNumber(ConfigManager::RATE_SPAWN))) {
@@ -271,15 +267,15 @@ void Spawn::checkSpawn()
 	}
 }
 
-void Spawn::scheduleSpawn(uint32_t spawnId, spawnBlock_t& sb, uint16_t interval)
-{
-	if (interval <= 0) {
-		spawnMonster(spawnId, sb.mType, sb.pos, sb.direction);
-	} else {
-		g_game.addMagicEffect(sb.pos, CONST_ME_TELEPORT);
-		g_scheduler.addEvent(createSchedulerTask(1400, std::bind(&Spawn::scheduleSpawn, this, spawnId, sb, interval - NONBLOCKABLE_SPAWN_INTERVAL)));
-	}
-}
+void Spawn::scheduleSpawn(uint32_t spawnId, spawnBlock_t sb, uint32_t interval)
+ {
+ 	if (interval <= 0) {
+ 		spawnMonster(spawnId, sb.mType, sb.pos, sb.direction);
+ 	} else {
+ 		g_game.addMagicEffect(sb.pos, CONST_ME_TELEPORT);
+ 		g_scheduler.addEvent(createSchedulerTask(1400, std::bind(&Spawn::scheduleSpawn, this, spawnId, sb, interval - 1400)));
+ 	}
+ }
 
 void Spawn::cleanup()
 {

@@ -11,14 +11,11 @@ Storage = {
 		QuestLine = 90,
 		bansheeDoor = 91,
 		bonelordsDoor = 92,
-		CalassaQuest = 93,
+		calassaDoor = 93,
 		edronDoor = 94,
 		elvenDoor = 95,
 		orcDoor = 96,
-		urnDoor = 97,
-		SpectralStone = 98,		-- = 1 - mission taken from Angus, = 2 - mission taken from Mortimer
-		skullofratha = 99,
-		giantsmithhammer = 100
+		urnDoor = 97
 	},
 	TravellingTrader = {
 		Mission01 = 101,
@@ -330,7 +327,6 @@ Storage = {
 		WizardAddon = 12066,
 
 		-- Pirate-outfit Quest
-		PirateBaseOutfit = 50003,
 		PirateSabreAddon = 50002,
 		PirateHatAddon = 22034,
 
@@ -678,17 +674,6 @@ Storage = {
 		DragahsSpellbook = 12709,
 		TheCounterspell = 12710
 	},
-	SearoutesAroundYalahar = {
-		TownsCounter = 12800,
-		AbDendriel = 12801,
-		Darashia = 12802,
-		Venore = 12803,
-		Ankrahmun = 12804,
-		PortHope = 12805,
-		Thais = 12806,
-		LibertyBay = 12807,
-		Carlin = 12808,
-	},	
 	KillingInTheNameOf = {
 		LugriNecromancers = 50000,
 		LugriNecromancerCount = 65050,
@@ -745,7 +730,7 @@ Storage = {
 	},
 	SvargrondArena = {
 		Arena = 1100,
-		Pit = 13100,
+		Pit = 1101,
 
 		QuestLogGreenhorn = 50140,
 		QuestLogScrapper = 50141,
@@ -822,9 +807,7 @@ Storage = {
 		WhisperMoss = 50033,
 		OldParchment = 50034,
 
-		DragahsSpellbook = 50148,
-		
-		StealFromThieves = 19910
+		DragahsSpellbook = 50148
 	},
 	PitsOfInferno = {
 		ShortcutHub = 8819,
@@ -993,9 +976,7 @@ Storage = {
 	Factions = 50716,
 	MaryzaCookbook = 50721,
 	combatProtectionStorage = 50722,
-	blockMovementStorage = 100000,
-	PetSummon = 60045
-
+	blockMovementStorage = 100000
 }
 
 GlobalStorage = {
@@ -1049,7 +1030,5 @@ GlobalStorage = {
 		AshmunrahSwitchesGlobalStorage = 202
 	},
 	NaginataStone = 50058,
-	ExpBoost = 51052,
 	SwordOfFury = 5635
-
 }

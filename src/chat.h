@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@
 class Party;
 class Player;
 
-using UsersMap = std::map<uint32_t, Player*>;
-using InvitedMap = std::map<uint32_t, const Player*>;
+typedef std::map<uint32_t, Player*> UsersMap;
+typedef std::map<uint32_t, const Player*> InvitedMap;
 
 class ChatChannel
 {
@@ -41,7 +41,6 @@ class ChatChannel
 
 		bool addUser(Player& player);
 		bool removeUser(const Player& player);
-		bool hasUser(const Player& player);
 
 		bool talk(const Player& fromPlayer, SpeakClasses type, const std::string& text);
 		void sendToAll(const std::string& message, SpeakClasses type) const;
@@ -116,7 +115,7 @@ class PrivateChatChannel final : public ChatChannel
 		uint32_t owner = 0;
 };
 
-using ChannelList = std::list<ChatChannel*>;
+typedef std::list<ChatChannel*> ChannelList;
 
 class Chat
 {

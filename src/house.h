@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ class AccessList
 		void parseList(const std::string& list);
 		void addPlayer(const std::string& name);
 		void addGuild(const std::string& name);
-		void addGuildRank(const std::string& name, const std::string& guildName);
 		void addExpression(const std::string& expression);
 
 		bool isInList(const Player* player);
@@ -46,7 +45,7 @@ class AccessList
 	private:
 		std::string list;
 		std::unordered_set<uint32_t> playerList;
-		std::unordered_set<uint32_t> guildRankList;
+		std::unordered_set<uint32_t> guildList; // TODO: include ranks
 		std::list<std::string> expressionList;
 		std::list<std::pair<std::regex, bool>> regExList;
 };
@@ -110,8 +109,8 @@ enum AccessHouseLevel_t {
 	HOUSE_OWNER = 3,
 };
 
-using HouseTileList = std::list<HouseTile*>;
-using HouseBedItemList = std::list<BedItem*>;
+typedef std::list<HouseTile*> HouseTileList;
+typedef std::list<BedItem*> HouseBedItemList;
 
 class HouseTransferItem final : public Item
 {
@@ -256,7 +255,7 @@ class House
 		bool isLoaded = false;
 };
 
-using HouseMap = std::map<uint32_t, House*>;
+typedef std::map<uint32_t, House*> HouseMap;
 
 enum RentPeriod_t {
 	RENTPERIOD_DAILY,

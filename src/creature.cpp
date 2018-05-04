@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ Creature::~Creature()
 {
 	for (Creature* summon : summons) {
 		summon->setAttackedCreature(nullptr);
-		summon->removeMaster();
+		summon->setMaster(nullptr);
+		summon->decrementReferenceCounter();
 	}
 
 	for (Condition* condition : conditions) {
@@ -363,7 +364,7 @@ void Creature::onAddTileItem(const Tile* tile, const Position& pos)
 }
 
 void Creature::onUpdateTileItem(const Tile* tile, const Position& pos, const Item*,
-								const ItemType& oldType, const Item*, const ItemType& newType)
+                                const ItemType& oldType, const Item*, const ItemType& newType)
 {
 	if (!isMapLoaded) {
 		return;
@@ -412,7 +413,7 @@ void Creature::onRemoveCreature(Creature* creature, bool)
 	onCreatureDisappear(creature, true);
 	if (creature == this) {
 		if (master && !master->isRemoved()) {
-			setMaster(nullptr);
+			master->removeSummon(this);
 		}
 	} else if (isMapLoaded) {
 		if (creature->getPosition().z == getPosition().z) {
@@ -449,7 +450,7 @@ void Creature::onAttackedCreatureChangeZone(ZoneType_t zone)
 }
 
 void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
-							  const Tile* oldTile, const Position& oldPos, bool teleport)
+                              const Tile* oldTile, const Position& oldPos, bool teleport)
 {
 	if (creature == this) {
 		lastStep = OTSYS_TIME();
@@ -468,16 +469,12 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 		}
 
 		if (!summons.empty()) {
-			//check if any of our summons is out of range (+/- 1 floors or 30 tiles away)
+			//check if any of our summons is out of range (+/- 2 floors or 30 tiles away)
 			std::forward_list<Creature*> despawnList;
 			for (Creature* summon : summons) {
 				const Position& pos = summon->getPosition();
-				if (Position::getDistanceZ(newPos, pos) > 0 || (std::max<int32_t>(Position::getDistanceX(newPos, pos), Position::getDistanceY(newPos, pos)) > 30)) {
-					if (!summon->getMonster()->isPet()) {
-						despawnList.push_front(summon);
-					} else {
-						g_game.internalTeleport(summon, summon->getMaster()->getPosition(), true);
-					}
+				if (Position::getDistanceZ(newPos, pos) > 2 || (std::max<int32_t>(Position::getDistanceX(newPos, pos), Position::getDistanceY(newPos, pos)) > 30)) {
+					despawnList.push_front(summon);
 				}
 			}
 
@@ -641,10 +638,8 @@ void Creature::onDeath()
 
 			if (attacker != this) {
 				uint64_t gainExp = getGainedExperience(attacker);
-				if (Player* attackerPlayer = attacker->getPlayer()) {
-					attackerPlayer->removeAttacked(getPlayer());
-
-					Party* party = attackerPlayer->getParty();
+				if (Player* player = attacker->getPlayer()) {
+					Party* party = player->getParty();
 					if (party && party->getLeader() && party->isSharedExperienceActive() && party->isSharedExperienceEnabled()) {
 						attacker = party->getLeader();
 					}
@@ -677,7 +672,7 @@ void Creature::onDeath()
 	death(lastHitCreature);
 
 	if (master) {
-		setMaster(nullptr);
+		master->removeSummon(this);
 	}
 
 	if (droppedCorpse) {
@@ -779,6 +774,10 @@ void Creature::changeMana(int32_t manaChange)
 
 void Creature::gainHealth(Creature* healer, int32_t healthGain)
 {
+	if (healer) // Check to avoid crash
+		if (healer->getPlayer() && this->getMonster()) // check if healer is a player and target is a monster.
+			return; // deny heal
+
 	changeHealth(healthGain);
 	if (healer) {
 		healer->onTargetCreatureGainHealth(this, healthGain);
@@ -805,7 +804,7 @@ void Creature::drainMana(Creature* attacker, int32_t manaLoss)
 }
 
 BlockType_t Creature::blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
-							   bool checkDefense /* = false */, bool checkArmor /* = false */, bool /* field  = false */)
+                               bool checkDefense /* = false */, bool checkArmor /* = false */, bool /* field  = false */)
 {
 	BlockType_t blockType = BLOCK_NONE;
 
@@ -820,7 +819,7 @@ BlockType_t Creature::blockHit(Creature* attacker, CombatType_t combatType, int3
 			hasDefense = true;
 		}
 
-		if (checkDefense && hasDefense && canUseDefense) {
+		if (checkDefense && hasDefense) {
 			int32_t defense = getDefense();
 			damage -= uniform_random(defense / 2, defense);
 			if (damage <= 0) {
@@ -861,10 +860,6 @@ BlockType_t Creature::blockHit(Creature* attacker, CombatType_t combatType, int3
 bool Creature::setAttackedCreature(Creature* creature)
 {
 	if (creature) {
-		if (this->getMonster() && this->getMonster()->isPet() && this->getTile()->hasFlag(TILESTATE_PROTECTIONZONE)) {
-			return false;
-		}
-
 		const Position& creaturePos = creature->getPosition();
 		if (creaturePos.z != getPosition().z || !canSee(creaturePos)) {
 			attackedCreature = nullptr;
@@ -1089,14 +1084,6 @@ void Creature::onAttackedCreatureDrainHealth(Creature* target, int32_t points)
 	target->addDamagePoints(this, points);
 }
 
-void Creature::onAttackedCreatureKilled(Creature* target)
-{
-	if (target != this) {
-		uint64_t gainExp = target->getGainedExperience(this);
-		onGainExperience(gainExp, target);
-	}
-}
-
 bool Creature::onKilledCreature(Creature* target, bool)
 {
 	if (master) {
@@ -1117,52 +1104,44 @@ void Creature::onGainExperience(uint64_t gainExp, Creature* target)
 		return;
 	}
 
-	Monster* m = getMonster();
-	if (!m->isPet()) {
-		gainExp /= 2;
-	}
-
+	gainExp /= 2;
 	master->onGainExperience(gainExp, target);
 
-	if (!m->isPet()) {
-		SpectatorHashSet spectators;
-		g_game.map.getSpectators(spectators, position, false, true);
-		if (spectators.empty()) {
-			return;
-		}
+	SpectatorVec list;
+	g_game.map.getSpectators(list, position, false, true);
+	if (list.empty()) {
+		return;
+	}
 
-		TextMessage message(MESSAGE_EXPERIENCE_OTHERS, ucfirst(getNameDescription()) + " gained " + std::to_string(gainExp) + (gainExp != 1 ? " experience points." : " experience point."));
-		message.position = position;
-		message.primary.color = TEXTCOLOR_WHITE_EXP;
-		message.primary.value = gainExp;
+	TextMessage message(MESSAGE_EXPERIENCE_OTHERS, ucfirst(getNameDescription()) + " gained " + std::to_string(gainExp) + (gainExp != 1 ? " experience points." : " experience point."));
+	message.position = position;
+	message.primary.color = TEXTCOLOR_WHITE_EXP;
+	message.primary.value = gainExp;
 
-		for (Creature* spectator : spectators) {
-			spectator->getPlayer()->sendTextMessage(message);
-		}
+	for (Creature* spectator : list) {
+		spectator->getPlayer()->sendTextMessage(message);
 	}
 }
 
-bool Creature::setMaster(Creature* newMaster) {
-	if (!newMaster && !master) {
-		return false;
-	}
+void Creature::addSummon(Creature* creature)
+{
+	creature->setDropLoot(false);
+	creature->setLossSkill(false);
+	creature->setMaster(this);
+	creature->incrementReferenceCounter();
+	summons.push_back(creature);
+}
 
-	if (newMaster) {
-		incrementReferenceCounter();
-		newMaster->summons.push_back(this);
+void Creature::removeSummon(Creature* creature)
+{
+	auto cit = std::find(summons.begin(), summons.end(), creature);
+	if (cit != summons.end()) {
+		creature->setDropLoot(false);
+		creature->setLossSkill(true);
+		creature->setMaster(nullptr);
+		creature->decrementReferenceCounter();
+		summons.erase(cit);
 	}
-
-	Creature* oldMaster = master;
-	master = newMaster;
-
-	if (oldMaster) {
-		auto summon = std::find(oldMaster->summons.begin(), oldMaster->summons.end(), this);
-		if (summon != oldMaster->summons.end()) {
-			oldMaster->summons.erase(summon);
-			decrementReferenceCounter();
-		}
-	}
-	return true;
 }
 
 bool Creature::addCondition(Condition* condition, bool force/* = false*/)
@@ -1521,7 +1500,7 @@ CreatureEventList Creature::getCreatureEvents(CreatureEventType_t type)
 }
 
 bool FrozenPathingConditionCall::isInRange(const Position& startPos, const Position& testPos,
-		const FindPathParams& fpp) const
+        const FindPathParams& fpp) const
 {
 	if (fpp.fullPathSearch) {
 		if (testPos.x > targetPos.x + fpp.maxTargetDist) {
@@ -1568,7 +1547,7 @@ bool FrozenPathingConditionCall::isInRange(const Position& startPos, const Posit
 }
 
 bool FrozenPathingConditionCall::operator()(const Position& startPos, const Position& testPos,
-		const FindPathParams& fpp, int32_t& bestMatchDist) const
+        const FindPathParams& fpp, int32_t& bestMatchDist) const
 {
 	if (!isInRange(startPos, testPos, fpp)) {
 		return false;

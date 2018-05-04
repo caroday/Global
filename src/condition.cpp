@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -355,7 +355,6 @@ void ConditionAttributes::addCondition(Creature* creature, const Condition* addC
 		memcpy(skillsPercent, conditionAttrs.skillsPercent, sizeof(skillsPercent));
 		memcpy(stats, conditionAttrs.stats, sizeof(stats));
 		memcpy(statsPercent, conditionAttrs.statsPercent, sizeof(statsPercent));
-		disableDefense = conditionAttrs.disableDefense;
 
 		if (Player* player = creature->getPlayer()) {
 			updatePercentSkills(player);
@@ -397,8 +396,6 @@ bool ConditionAttributes::startCondition(Creature* creature)
 		return false;
 	}
 
-	creature->setUseDefense(!disableDefense);
-
 	if (Player* player = creature->getPlayer()) {
 		updatePercentSkills(player);
 		updateSkills(player);
@@ -426,7 +423,7 @@ void ConditionAttributes::updatePercentStats(Player* player)
 				break;
 
 			case STAT_MAGICPOINTS:
-				stats[i] = static_cast<int32_t>(player->getBaseMagicLevel() * ((statsPercent[i] - 100) / 100.f));
+				stats[i] = static_cast<int32_t>(player->getMagicLevel() * ((statsPercent[i] - 100) / 100.f));
 				break;
 		}
 	}
@@ -510,11 +507,6 @@ void ConditionAttributes::endCondition(Creature* creature)
 		if (needUpdateStats) {
 			player->sendStats();
 		}
-	}
-	
-		if (disableDefense) {
-		creature->setUseDefense(true);
-		
 	}
 }
 
@@ -697,12 +689,7 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		case CONDITION_PARAM_DISABLE_DEFENSE: {
-			disableDefense = (value != 0);
-			return true;
-		}
-
-			default:
+		default:
 			return ret;
 	}
 }
@@ -777,13 +764,13 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 					message.primary.color = TEXTCOLOR_MAYABLUE;
 					player->sendTextMessage(message);
 
-					SpectatorHashSet spectators;
-					g_game.map.getSpectators(spectators, player->getPosition(), false, true);
-					spectators.erase(player);
-					if (!spectators.empty()) {
+					SpectatorVec list;
+					g_game.map.getSpectators(list, player->getPosition(), false, true);
+					list.erase(player);
+					if (!list.empty()) {
 						message.type = MESSAGE_HEALED_OTHERS;
 						message.text = player->getName() + " was healed for " + healString;
-						for (Creature* spectator : spectators) {
+						for (Creature* spectator : list) {
 							spectator->getPlayer()->sendTextMessage(message);
 						}
 					}

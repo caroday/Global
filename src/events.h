@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@ class Events
 		int32_t partyOnJoin = -1;
 		int32_t partyOnLeave = -1;
 		int32_t partyOnDisband = -1;
-		int32_t partyOnShareExperience = -1;
 
 		// Player
 		int32_t playerOnBrowseField = -1;
@@ -48,11 +47,8 @@ class Events
 		int32_t playerOnLookInBattleList = -1;
 		int32_t playerOnLookInTrade = -1;
 		int32_t playerOnLookInShop = -1;
-		int32_t playerOnMove = -1;
 		int32_t playerOnMoveItem = -1;
 		int32_t playerOnMoveCreature = -1;
-		int32_t playerOnReportRuleViolation = -1;
-		int32_t playerOnReportBug = -1;
 		int32_t playerOnTurn = -1;
 		int32_t playerOnTradeRequest = -1;
 		int32_t playerOnTradeAccept = -1;
@@ -61,11 +57,6 @@ class Events
 		int32_t playerOnGainSkillTries = -1;
 		int32_t playerOnUseWeapon = -1;
 		int32_t playerOnCombatSpell = -1;
-		int32_t playerOnEquipImbuement = -1;
-		int32_t playerOnDeEquipImbuement = -1;
-
-		// Custom
-		int32_t monsterOnSpawn = -1;
 	};
 
 	public:
@@ -83,7 +74,6 @@ class Events
 		bool eventPartyOnJoin(Party* party, Player* player);
 		bool eventPartyOnLeave(Party* party, Player* player);
 		bool eventPartyOnDisband(Party* party);
-		void eventPartyOnShareExperience(Party* party, uint64_t& exp);
 
 		// Player
 		bool eventPlayerOnBrowseField(Player* player, const Position& position);
@@ -93,8 +83,6 @@ class Events
 		bool eventPlayerOnLookInShop(Player* player, const ItemType* itemType, uint8_t count);
 		bool eventPlayerOnMoveItem(Player* player, Item* item, uint16_t count, const Position& fromPosition, const Position& toPosition, Cylinder* fromCylinder, Cylinder* toCylinder);
 		bool eventPlayerOnMoveCreature(Player* player, Creature* creature, const Position& fromPosition, const Position& toPosition);
-		void eventPlayerOnReportRuleViolation(Player* player, const std::string& targetName, uint8_t reportType, uint8_t reportReason, const std::string& comment, const std::string& translation);
-		bool eventPlayerOnReportBug(Player* player, const std::string& message, const Position& position, uint8_t category);
 		bool eventPlayerOnTurn(Player* player, Direction direction);
 		bool eventPlayerOnTradeRequest(Player* player, Player* target, Item* item);
 		bool eventPlayerOnTradeAccept(Player* player, Player* target, Item* item, Item* targetItem);
@@ -102,13 +90,7 @@ class Events
 		void eventPlayerOnLoseExperience(Player* player, uint64_t& exp);
 		void eventPlayerOnGainSkillTries(Player* player, skills_t skill, uint64_t& tries);
 		void eventPlayerOnUseWeapon(Player* player, int32_t& normalDamage, CombatType_t& elementType, int32_t& elementDamage);
-		void eventPlayerOnCombatSpell(Player* player, int32_t& normalDamage, int32_t& elementDamage, CombatType_t& elementType, bool changeDamage);
-		bool eventPlayerOnMove(Player* player);
-		void eventPlayerOnEquipImbuement(Player* player, Item* item);
-		void eventPlayerOnDeEquipImbuement(Player* player, Item* item);
-
-		// Custom
-		void eventMonsterOnSpawn(Monster* monster, const Position& position);
+		void eventPlayerOnCombatSpell(Player* player, int32_t& normalDamage, int32_t& elementDamage, CombatType_t& elementType);
 
 	private:
 		LuaScriptInterface scriptInterface;
