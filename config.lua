@@ -3,8 +3,6 @@
 worldType = "pvp-enforced"
 hotkeyAimbotEnabled = true
 protectionLevel = 100
-killsToRedSkull = 6
-killsToBlackSkull = 10
 pzLocked = 60 * 1000
 removeChargesFromRunes = false
 removeChargesFromPotions = true
@@ -15,6 +13,12 @@ whiteSkullTime = 7 * 60 * 1000
 stairJumpExhaustion = 500
 experienceByKillingPlayers = true
 expFromPlayersLevelRange = 75
+dayKillsToRedSkull = 5
+weekKillsToRedSkull = 25
+monthKillsToRedSkull = 75
+redSkullDuration = 15
+blackSkullDuration = 22
+orangeSkullDuration = 3
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
@@ -31,20 +35,26 @@ serverName = "UATibia"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
 maxPacketsPerSecond = 1000
-enableLiveCasting = true
-liveCastPort = 7173
 
--- Store in-Game Config
-coinPacketSize = 1
-coinImagesURL = "http://uatibia.com/global/images/store/"
-
--- PVP-Expert Config
-expertPvp = false
+-- Version Manual
+clientVersionMin = 1100
+clientVersionMax = 1157
+clientVersionStr = "11.57"
 
 -- Depot Limit
 freeDepotLimit = 2000
 premiumDepotLimit = 10000
 depotBoxes = 17
+
+-- GameStore
+gamestoreByModules = true
+
+-- Casting System 
+enableLiveCasting = true
+liveCastPort = 7173
+
+-- Expert Pvp Config
+expertPvp = false
 
 -- Deaths
 -- NOTE: Leave deathLosePercent as -1 if you want to use the default
@@ -63,12 +73,12 @@ timeBetweenExActions = 1000
 
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
-mapName = "global"
+mapName = "realmap"
 mapAuthor = "UATibia Staff"
 
 -- Market
 marketOfferDuration = 30 * 24 * 60 * 60
-premiumToCreateMarketOffer = false
+premiumToCreateMarketOffer = true
 checkExpiredMarketOffersEachMinutes = 60
 maxMarketOffersAtATimePerPlayer = 100
 
@@ -78,25 +88,35 @@ mysqlUser = "root"
 mysqlPass = "tunelsecreto27"
 mysqlDatabase = "global"
 mysqlPort = 3306
-passwordType = "sha1"
 mysqlSock = ""
+passwordType = "sha1"
 
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
 kickIdlePlayerAfterMinutes = 1500
+idleWarningTime = 1500 * 60 * 1000
+idleKickTime = 1500 * 60 * 1000
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = true
 allowWalkthrough = true
+coinPacketSize = 1
+coinImagesURL = "http://uatibia.com/global/images/store/"
+classicAttackSpeed = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
 rateExp = 1
 rateSkill = 30
-rateLoot = 4
-rateMagic = 8
+rateLoot = 3
+rateMagic = 10
 rateSpawn = 2
+
+-- Monster rates
+rateMonsterHealth = 1.0
+rateMonsterAttack = 1.0
+rateMonsterDefense = 1.0
 
 -- Monsters
 deSpawnRange = 2
@@ -113,7 +133,7 @@ convertUnsafeScripts = true
 -- NOTE: defaultPriority only works on Windows and sets process
 -- priority, valid values are: "normal", "above-normal", "high"
 defaultPriority = "high"
-startupDatabaseOptimization = true
+startupDatabaseOptimization = false
 
 -- Status server information
 ownerName = "UATibia Staff"
