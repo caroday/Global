@@ -84,4 +84,9 @@ function onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDama
 			end
 		end
 	end
+	--UATibia
+	if killer:isPlayer() then
+		broadcastMessage(player:getName().."["..player:getLevel().."] just killed by the player "..killer:getName().."["..killer:getLevel().."].", MESSAGE_EVENT_ADVANCE)
+	end
+	--ENDUATibia
 end

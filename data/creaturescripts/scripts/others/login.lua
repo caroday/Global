@@ -55,7 +55,13 @@ local events = {
     'bless1',
 	'lowerRoshamuul',
 	'SpikeTaskQuestCrystal',
-	'SpikeTaskQuestDrillworm'
+	'SpikeTaskQuestDrillworm',
+	'petlogin',
+	'Idle',
+	'petthink',
+	'UpperSpikeKill',
+	'MiddleSpikeKill',
+	'LowerSpikeKill'
 }
  
 local function onMovementRemoveProtection(cid, oldPosition, time)
@@ -135,32 +141,36 @@ function onLogin(player)
     end
 
     if (player:getAccountType() == ACCOUNT_TYPE_TUTOR) then
-        local msg = [[:: Regras Tutor ::
-            1*>3 Advertências você perde o cargo.
-            2*>Sem conversas paralelas com jogadores no Help, se o player começar a ofender, você simplesmente o mute.
-            3*>Seja educado com os player no Help e principalmente no Privado, tenta ajudar o máximo possível.
-            4*>Sempre logue no seu horário, caso não tiver uma justificativa você será removido da staff.
-            5*>Help é somente permitido realizar dúvidas relacionadas ao tibia.
-            6*>Não é Permitido divulgar time pra upar ou para ajudar em quest.
-            7*>Não é permitido venda de itens no Help.
-            8*>Caso o player encontre um bug, peça para ir ao site mandar um ticket e explicar em detalhes.
-            9*>Mantenha sempre o Chat dos Tutores aberto. (obrigatório).
-            10*>Você terminou de cumprir seu horário, viu que não tem nenhum tutor Online, você comunica com algum CM in-game ou ts e fica no help até alguém logar, se der.
-            11*>Mantenha sempre um ótimo português no Help, queremos tutores que dêem suporte, não que fiquem falando um ritual satânico.
-            12*>Se ver um tutor fazendo algo que infrinja as regras, tire uma print e envie aos superiores."
-            -- Comandos --
-            Mutar Player: /mute nick,90. (90 segundos)
-            Desmutar Player: /unmute nick.
-            -- Comandos --]]
+        local msg = [[:: Tutor Rules ::
+            1*>3 Warnings you lose the job.
+            2*>Without parallel conversations with players in Help, if the player starts offending, you simply mute.
+            3*>Be polite with the players in the Help and especially in the Private, try to help as much as possible.
+            4*>Always log in your schedule, if you do not have a justification you will be removed from the staff.
+            5*>Help is only allowed to ask questions related to tibia.
+            6*>It is not allowed to divulge a team to kill or to help in quest.
+            7*>You are not allowed to sell items in Help.
+            8*>If the player finds a bug, ask to go to the website to send a ticket and explain in detail.
+            9*>Always keep the Tutor Chat open. (required).
+            10*>You finished to meet your schedule, saw that has no online tutor, you communicate with any CM in-game or ts and is no help to anyone login, if you give.
+            11*>Always keep a great English in Help, we want tutors who support, not that they speak a satanic ritual.
+            12*>If you see a tutor doing something that violates the rules, take a print and send it to the superiors."
+            -- Commands --
+            Mute Player: /mute nick,90. (90 segundos)
+            Desmute Player: /unmute nick.
+            -- Commands --]]
         player:popupFYI(msg)
     end
    
-     -- ABRIR CHANNELS
-    if(not isInArray({1,2,3,5,6,7,8}, player:getVocation():getId()) or player:getLevel() < 6) then
-        player:openChannel(6)   -- advertsing rook main
-    else
-        player:openChannel(5)   -- advertsing main 
-    end
+ 	-- OPEN CHANNERLS (ABRIR CHANNELS)
+	if table.contains({"Rookgaard", "Dawnport"}, player:getTown():getName())then
+		player:openChannel(3) -- world chat
+		player:openChannel(6) -- advertsing rook main
+		player:openChannel(7) -- help channel
+	else
+		player:openChannel(3) -- world chat
+		player:openChannel(5) -- advertsing main
+		player:openChannel(7) -- help channel
+	end
 
       --
     -- Rewards
@@ -182,33 +192,51 @@ function onLogin(player)
     	messageType = MESSAGE_EVENT_ADVANCE
     end
 
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, 'Bem vindo ao Otxserver-Global!')
-    
-    if Game.getStorageValue(GlobalStorage.FuryGates, (9710)) == 1 then
+    if Game.getStorageValue(9710) == 1 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Venore Today.')
-    elseif Game.getStorageValue(GlobalStorage.FuryGates, (9711)) == 2 then
+    elseif Game.getStorageValue(9711) == 2 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Abdendriel Today.')
-    elseif Game.getStorageValue(GlobalStorage.FuryGates, (9712)) == 3 then
+    elseif Game.getStorageValue(9712) == 3 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Thais Today.')
-    elseif Game.getStorageValue(GlobalStorage.FuryGates, (9713)) == 4 then
+    elseif Game.getStorageValue(9713) == 4 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Carlin Today.')
-    elseif Game.getStorageValue(GlobalStorage.FuryGates, (9714)) == 5 then
+    elseif Game.getStorageValue(9714) == 5 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Edron Today.')
-    elseif Game.getStorageValue(GlobalStorage.FuryGates, (9716)) == 6 then
+    elseif Game.getStorageValue(9716) == 6 then
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
     end
 
-    player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[PREY SYSTEM and IMBUIMENT] Desfrute de todos os nossos sistemas disponiveis no servidor.')
-    player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[how to get Premium Edition?] https://chat.whatsapp.com/EaoiRFXYxmdKqgmdQpWfg8')
+	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report in http://www.uatibia.com')
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMUNITY] https://www.facebook.com/groups/uatibia')
+    player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMANDS] !buyhouse, !leavehouse, !sellhouse, !uptime, !online, !serverinfo, !report, /war, !cast, !stopcast, !spectators, !outfit, !frags, !kills, !aol, !bless.')
    
     -- Events
     for i = 1, #events do
         player:registerEvent(events[i])
     end
- 	
-    if player:getStorageValue(Storage.combatProtectionStorage) <= os.time() then
-        player:setStorageValue(Storage.combatProtectionStorage, os.time() + 10)
+ 
+ 
+ 	if player:getStorageValue(Storage.combatProtectionStorage) < 1 then
+        player:setStorageValue(Storage.combatProtectionStorage, 1)
         onMovementRemoveProtection(playerId, player:getPosition(), 10)
-    end
+	end
+
+	-- Exp stats
+	local staminaMinutes = player:getStamina()
+	local Boost = player:getExpBoostStamina()
+	if staminaMinutes > 2400 and player:isPremium() and Boost > 0 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*2) -- 200 = 1.0x, 200 = 2.0x, ... premium account
+	elseif staminaMinutes > 2400 and player:isPremium() and Boost <= 0 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.0x, 150 = 1.5x, ... premium account
+	elseif staminaMinutes <= 2400 and staminaMinutes > 840 and player:isPremium() and Boost > 0 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.5x		premium account
+	elseif staminaMinutes > 840 and Boost > 0 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.5x		free account
+	elseif staminaMinutes <= 840 and Boost > 0 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1) -- 50 = 0.5x	all players
+	elseif staminaMinutes <= 840 then
+		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*0.5) -- 50 = 0.5x	all players
+	end
+
     return true
 end

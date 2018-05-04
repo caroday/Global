@@ -1,47 +1,60 @@
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
-worldType = "pvp"
+worldType = "pvp-enforced"
 hotkeyAimbotEnabled = true
-protectionLevel = 8
-killsToRedSkull = 6
-killsToBlackSkull = 10
+protectionLevel = 100
 pzLocked = 60 * 1000
-removeChargesFromRunes = true
-timeToDecreaseFrags = 24 * 60 * 60 * 1000
-whiteSkullTime = 15 * 60 * 1000
-stairJumpExhaustion = 2 * 1000
-experienceByKillingPlayers = false
+removeChargesFromRunes = false
+removeChargesFromPotions = true
+removeWeaponAmmunition = false
+removeWeaponCharges = false
+timeToDecreaseFrags = 4 * 60 * 60 * 1000
+whiteSkullTime = 7 * 60 * 1000
+stairJumpExhaustion = 500
+experienceByKillingPlayers = true
 expFromPlayersLevelRange = 75
+dayKillsToRedSkull = 5
+weekKillsToRedSkull = 25
+monthKillsToRedSkull = 75
+redSkullDuration = 15
+blackSkullDuration = 22
+orangeSkullDuration = 3
 
 -- Connection Config
 -- NOTE: maxPlayers set to 0 means no limit
-ip = "127.0.0.1"
+ip = "159.203.78.218"
 bindOnlyGlobalAddress = false
 loginProtocolPort = 7171
 gameProtocolPort = 7172
 statusProtocolPort = 7171
-maxPlayers = 2000
-motd = "Welcome To Otxsever-Global! OpenServer - Prey System + Imbuiment System and More..."
-onePlayerOnlinePerAccount = true
+maxPlayers = 0
+motd = "Welcome to Ultima Alianza Tibia Global RPG ONLINE: \n \n www.uatibia.com \n\n Follow us in facebook www.facebook.com/uatibia and twitter www.twitter.com/uatibia and get the official \n source for news, tips and good assistance for the game.\n Join the community in our forums platform: www.uatibia.com/forum/\n\n *Have fun! \n\n\n The Administration."
+onePlayerOnlinePerAccount = false
 allowClones = false
-serverName = "Otxserver-Global"
+serverName = "UATibia"
 statusTimeout = 5 * 1000
 replaceKickOnLogin = true
-maxPacketsPerSecond = 50
-enableLiveCasting = true
-liveCastPort = 7173
+maxPacketsPerSecond = 1000
 
--- Store in-Game Config
-coinPacketSize = 1
-coinImagesURL = "http://127.0.0.1/store/"
-
--- PVP-Expert Config
-expertPvp = false
+-- Version Manual
+clientVersionMin = 1100
+clientVersionMax = 1157
+clientVersionStr = "11.57"
 
 -- Depot Limit
 freeDepotLimit = 2000
 premiumDepotLimit = 10000
 depotBoxes = 17
+
+-- GameStore
+gamestoreByModules = true
+
+-- Casting System 
+enableLiveCasting = true
+liveCastPort = 7173
+
+-- Expert Pvp Config
+expertPvp = false
 
 -- Deaths
 -- NOTE: Leave deathLosePercent as -1 if you want to use the default
@@ -51,8 +64,8 @@ deathLosePercent = -1
 
 -- Houses
 -- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
-housePriceEachSQM = 1000
-houseRentPeriod = "weekly"
+housePriceEachSQM = 3000
+houseRentPeriod = "never"
 
 -- Item Usage
 timeBetweenActions = 200
@@ -60,40 +73,50 @@ timeBetweenExActions = 1000
 
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
-mapName = "global"
-mapAuthor = "Cipsoft"
+mapName = "realmap"
+mapAuthor = "UATibia Staff"
 
 -- Market
 marketOfferDuration = 30 * 24 * 60 * 60
-premiumToCreateMarketOffer = false
+premiumToCreateMarketOffer = true
 checkExpiredMarketOffersEachMinutes = 60
 maxMarketOffersAtATimePerPlayer = 100
 
 -- MySQL
 mysqlHost = "127.0.0.1"
 mysqlUser = "root"
-mysqlPass = ""
+mysqlPass = "tunelsecreto27"
 mysqlDatabase = "global"
 mysqlPort = 3306
-passwordType = "sha1"
 mysqlSock = ""
+passwordType = "sha1"
 
 -- Misc.
 allowChangeOutfit = true
 freePremium = true
-kickIdlePlayerAfterMinutes = 15
+kickIdlePlayerAfterMinutes = 1500
+idleWarningTime = 1500 * 60 * 1000
+idleKickTime = 1500 * 60 * 1000
 maxMessageBuffer = 4
 emoteSpells = false
 classicEquipmentSlots = true
-allowWalkthrough = false
+allowWalkthrough = true
+coinPacketSize = 1
+coinImagesURL = "http://uatibia.com/global/images/store/"
+classicAttackSpeed = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
 rateExp = 1
 rateSkill = 30
-rateLoot = 4
-rateMagic = 8
+rateLoot = 3
+rateMagic = 10
 rateSpawn = 1
+
+-- Monster rates
+rateMonsterHealth = 1.0
+rateMonsterAttack = 1.0
+rateMonsterDefense = 1.0
 
 -- Monsters
 deSpawnRange = 2
@@ -110,10 +133,10 @@ convertUnsafeScripts = true
 -- NOTE: defaultPriority only works on Windows and sets process
 -- priority, valid values are: "normal", "above-normal", "high"
 defaultPriority = "high"
-startupDatabaseOptimization = true
+startupDatabaseOptimization = false
 
 -- Status server information
-ownerName = "Erick Nunes"
-ownerEmail = "e_nunes@live.com"
-url = "http://www.gitlab.com/malucooo/otxserver-test"
-location = "Brasil"
+ownerName = "UATibia Staff"
+ownerEmail = "contact@uatibia.com"
+url = "http://www.uatibia.com"
+location = "USA"
