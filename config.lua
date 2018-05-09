@@ -114,9 +114,9 @@ rateMagic = 10
 rateSpawn = 2
 
 -- Monster rates
-rateMonsterHealth = 1.0
-rateMonsterAttack = 1.0
-rateMonsterDefense = 1.0
+rateMonsterHealth = 1.5
+rateMonsterAttack = 2.0
+rateMonsterDefense = 1.25
 
 -- Monsters
 deSpawnRange = 2
