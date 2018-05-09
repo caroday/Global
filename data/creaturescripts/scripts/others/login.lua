@@ -206,8 +206,8 @@ function onLogin(player)
         player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
     end
 
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report in http://www.uatibia.com')
-	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMUNITY] https://www.facebook.com/groups/uatibia')
+	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Report it in our UATibia.com Whatsapp Group: https://chat.whatsapp.com/G5Dj7WvJZwD4UvJC09tSTX')
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMUNITY] http://www.uatibia.com/forum')
     player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, '[COMMANDS] !buyhouse, !leavehouse, !sellhouse, !uptime, !online, !serverinfo, !report, /war, !cast, !stopcast, !spectators, !outfit, !frags, !kills, !aol, !bless.')
    
     -- Events
