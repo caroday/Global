@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by Notepad++.
- * User: Malucooo - Erick Nunes
+ * User: Tatuy - Rafael Zunniga
  * Remaked of login.php by JLCVP and parts of login.php by Monteiro. Thanks for both!
  * Date: 18/09/17
  * Time: 03:01
