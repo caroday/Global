@@ -22,7 +22,7 @@
 # Downloads
 -> Ultima Alianza Tibia (UATibia.com) [Server Global](https://github.com/Tatuy/Global/archive/master.zip)
 
--> Store Imagens [31/01/2018](http://www.mediafire.com/file/985ey1yb3x2fpyf/store31-01-2018.rar)
+-> Images of the Tibia Store [31/01/2018](http://www.mediafire.com/file/985ey1yb3x2fpyf/store31-01-2018.rar)
 
 # Mapa Editor
 -> [Remeres Map Editor Official](https://github.com/hjnilsson/rme).
