@@ -1,9 +1,27 @@
-Global
-========
+# Ultima Alianza Tibia (UATibia.com) Server Global!  
+-> Servidor de Tibia mantenido por varios voluntarios de buen corazón. El servidor se utiliza como base OTX Server 3.10 <- 
 
-Global is a free and open-source MMORPG server emulator written in C++. It is a fork of the [forgottenserver](https://github.com/otland/forgottenserver) project. To play the game, you can see [UATibia.com](http://www.uatibia.com).
+# Contacto:
+-> Facebook: www.facebook.com/uatibia
 
-### Getting more inforamcion
+-> Skype: tatuy1
 
-* This project aims to recreate the Tibia World version 11.
-* Project owner: [Tatuy](mailto:rafael.zuniga.castro@gmail.com).
+-> Whatsapp: +52 1 662 138 1632
+
+-> [Grupo de Whatsapp] (https://chat.whatsapp.com/invite/G5Dj7WvJZwD4UvJC09tSTX) 
+
+-> [Grupo de Discord] (https://discord.gg/kbubM3D)
+
+
+# Referencias:
+-> [Forum](http://uatibia.com/forum)
+
+# Tutoriales
+-> Tenemos un Wiki que explica cómo compilar el servidor  [TFS Wiki](https://github.com/otland/forgottenserver/wiki/Compiling)
+
+# Downloads
+-> Ultima Alianza Tibia (UATibia.com) [Server Global](https://github.com/Tatuy/Global/archive/master.zip)
+-> Store Imagens [31/01/2018](http://www.mediafire.com/file/985ey1yb3x2fpyf/store31-01-2018.rar)
+
+# Mapa Editor
+-> [Remeres Map Editor Official](https://github.com/hjnilsson/rme).
