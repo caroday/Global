@@ -1,3 +1,8 @@
+Global
+========
+
+Global is a free and open-source MMORPG server emulator written in C++. It is a fork of the [forgottenserver](https://github.com/otland/forgottenserver) project. To play the game you can visit the website [UATibia.com](http://www.uatibia.com).
+
 # Ultima Alianza Tibia (UATibia.com) Server Global!  
 -> Servidor de Tibia mantenido por varios voluntarios de buen corazón. El servidor utiliza como base OTX Server 3.10 <- 
 
