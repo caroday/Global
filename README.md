@@ -1,12 +1,12 @@
 # Ultima Alianza Tibia (UATibia.com) Server Global!  
--> Servidor de Tibia mantenido por varios voluntarios de buen corazón. El servidor se utiliza como base OTX Server 3.10 <- 
+-> Servidor de Tibia mantenido por varios voluntarios de buen corazón. El servidor utiliza como base OTX Server 3.10 <- 
 
 # Contacto:
 -> Facebook: www.facebook.com/uatibia
 
 -> Skype: tatuy1
 
--> Whatsapp: +52 1 662 138 1632
+-> Whatsapp: +5216621381632
 
 -> [Grupo de Whatsapp] (https://chat.whatsapp.com/invite/G5Dj7WvJZwD4UvJC09tSTX) 
 
@@ -21,6 +21,7 @@
 
 # Downloads
 -> Ultima Alianza Tibia (UATibia.com) [Server Global](https://github.com/Tatuy/Global/archive/master.zip)
+
 -> Store Imagens [31/01/2018](http://www.mediafire.com/file/985ey1yb3x2fpyf/store31-01-2018.rar)
 
 # Mapa Editor
